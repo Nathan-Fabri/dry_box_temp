@@ -13,6 +13,7 @@ from psycopg2.extras import execute_values
 from dotenv import load_dotenv
 
 running = True
+db_connection = None  # Persistent database connection
 
 # Define paths dynamically based on script location
 # Get the directory where this script is located (Python folder)
@@ -111,6 +112,33 @@ def save_last_position(log_path, position):
             f.write(str(position))
     except Exception as e:
         logging.error(f"Error saving position: {e}")
+
+
+def get_db_connection():
+    """Get or create persistent database connection"""
+    global db_connection
+    try:
+        if db_connection is None or db_connection.closed:
+            db_connection = psycopg2.connect(**dbConfig)
+            logging.info("Database connection established")
+        return db_connection
+    except Exception as e:
+        logging.error(f"Failed to establish database connection: {e}")
+        db_connection = None
+        return None
+
+
+def close_db_connection():
+    """Close the persistent database connection"""
+    global db_connection
+    try:
+        if db_connection and not db_connection.closed:
+            db_connection.close()
+            logging.info("Database connection closed")
+    except Exception as e:
+        logging.error(f"Error closing database connection: {e}")
+    finally:
+        db_connection = None
 
 # ...existing parser functions remain the same...
 def parse_infrared_sensor_data(message):
@@ -239,13 +267,21 @@ def insert_vector_to_timescaledb(parsed_data, device_name):
     """
 
     try:
-        conn = psycopg2.connect(**dbConfig)
+        conn = get_db_connection()
+        if conn is None:
+            logging.error("Cannot insert: no database connection available")
+            return
+        
         cur = conn.cursor()
         execute_values(cur, insert_stmt, records)
         conn.commit()
         cur.close()
-        conn.close()
         logging.info(f"Inserted {len(records)} values from {device_name} to TimescaleDB.")
+    except psycopg2.OperationalError as e:
+        logging.error(f"Operational error during DB insert from {device_name}: {e}")
+        # Force reconnection on next attempt
+        global db_connection
+        db_connection = None
     except Exception as e:
         logging.error(f"Failed DB insert from {device_name}: {e}")
 
@@ -343,12 +379,17 @@ def main():
         return
     
     log_print("LogDB running. Press Ctrl+C to exit.")
-    follow_log_file(sensor_log_path)
     
-    # Log shutdown message after the main loop exits
-    if not running:
-        log_print("Received shutdown signal. Shutting down...")
-    log_print("LogDB shut down.")
+    try:
+        follow_log_file(sensor_log_path)
+    finally:
+        # Clean up database connection
+        close_db_connection()
+        
+        # Log shutdown message after the main loop exits
+        if not running:
+            log_print("Received shutdown signal. Shutting down...")
+        log_print("LogDB shut down.")
 
 if __name__ == "__main__":
     main()
