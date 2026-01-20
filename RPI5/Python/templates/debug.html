@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DryBox Debug Panel</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header-debug">
+        <h1>DryBox Debug Panel</h1>
+        <div>
+          <a href="/" class="nav-link">← Back to Control Panel</a>
+          <span
+            class="status-badge {% if system_running %}status-running{% else %}status-stopped{% endif %}"
+          >
+            {% if system_running %}RUNNING{% else %}STOPPED{% endif %}
+          </span>
+        </div>
+      </header>
+
+      <div id="message-area" class="hidden message-banner"></div>
+
+      <div class="controls">
+        <button id="refresh-btn" class="btn btn-refresh">Refresh All</button>
+      </div>
+
+      <div class="flash-section">
+        <h3>Flash Teensy Microcontrollers</h3>
+        <div class="flash-controls">
+          <select id="flash-target" class="flash-select">
+            <option value="TeensyHVAC">Teensy HVAC</option>
+            <option value="TeensyLeft">Teensy Left</option>
+            <option value="TeensyRight">Teensy Right</option>
+            <option value="all" selected>All Teensys</option>
+          </select>
+          <button id="flash-btn" class="btn flash-btn">
+            <span id="flash-spinner" class="spinner hidden"></span> Flash Teensy
+          </button>
+        </div>
+        <p class="flash-info">
+          Flashing a Teensy will upload new firmware to the selected
+          microcontroller. This operation may take a few minutes.
+        </p>
+      </div>
+
+      <div class="json-upload-section">
+        <h3>Upload Shell Configuration</h3>
+        <div class="json-upload-controls">
+          <div class="file-input-container">
+            <label for="json-file-input" class="file-input-label">
+              <span class="file-input-text">Choose JSON File</span>
+            </label>
+            <input
+              type="file"
+              id="json-file-input"
+              class="file-input"
+              accept=".json"
+            />
+            <span class="file-name" id="file-name-display">No file chosen</span>
+          </div>
+          <button id="json-upload-btn" class="btn json-upload-btn">
+            <span id="json-upload-spinner" class="spinner hidden"></span> Upload
+          </button>
+          <button id="json-view-btn" class="btn json-view-btn">
+            View Current
+          </button>
+        </div>
+        <p class="json-info">
+          Upload a new shellJson.json configuration file to update the DryBox
+          shell parameters.
+        </p>
+        <div id="json-preview" class="json-preview"></div>
+      </div>
+
+      <div class="log-section">
+        <div class="log-tabs">
+          <div class="log-tab active" data-tab="startup">Startup Log</div>
+          <div class="log-tab" data-tab="shutdown">Shutdown Log</div>
+          <div class="log-tab" data-tab="jsonparse">JSONParse Log</div>
+          <div class="log-tab" data-tab="serialdebug">SerialDebug Log</div>
+          <div class="log-tab" data-tab="flash">Flash Log</div>
+        </div>
+        <div id="log-content" class="log-container">{{ startup_log }}</div>
+      </div>
+    </div>
+
+    <script>
+      // Elements
+      const refreshBtn = document.getElementById('refresh-btn');
+      const logTabs = document.querySelectorAll('.log-tab');
+      const logContent = document.getElementById('log-content');
+      const messageArea = document.getElementById('message-area');
+      const statusBadge = document.querySelector('.status-badge');
+
+      // Initial state
+      let currentTab = 'startup';
+      let isSystemRunning = {{ 'true' if system_running else 'false' }};
+
+      // Tab switching
+      logTabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+              // Update active tab
+              logTabs.forEach(t => t.classList.remove('active'));
+              tab.classList.add('active');
+
+              // Update content
+              currentTab = tab.dataset.tab;
+              fetchLogContent();
+          });
+      });
+
+      // Refresh button action
+      refreshBtn.addEventListener('click', () => {
+          refreshSystemStatus();
+          fetchLogContent();
+      });
+
+      // Function to update UI based on system status
+      function updateSystemStatus(running) {
+          isSystemRunning = running;
+
+          // Update status badge
+          statusBadge.textContent = running ? 'RUNNING' : 'STOPPED';
+          statusBadge.className = `status-badge ${running ? 'status-running' : 'status-stopped'}`;
+      }
+
+      // Function to refresh system status
+      function refreshSystemStatus() {
+          fetch('/api/status')
+              .then(res => res.json())
+              .then(data => {
+                  updateSystemStatus(data.system_running);
+              })
+              .catch(error => {
+                  console.error('Error fetching status:', error);
+              });
+      }
+
+      // Function to fetch log content
+      function fetchLogContent() {
+          fetch(`/api/logs/${currentTab}?lines=100`)
+              .then(res => res.json())
+              .then(data => {
+                  if (data.status === 'success') {
+                      logContent.textContent = data.content;
+                      // Scroll to bottom
+                      logContent.scrollTop = logContent.scrollHeight;
+                  }
+              })
+              .catch(error => {
+                  console.error('Error fetching logs:', error);
+              });
+      }
+
+      // Function to show message
+      function showMessage(message, type) {
+          messageArea.textContent = message;
+          messageArea.className = `message-banner message-${type}`;
+          messageArea.classList.remove('hidden');
+
+          // Auto-hide after 5 seconds
+          setTimeout(() => {
+              messageArea.classList.add('hidden');
+          }, 5000);
+      }
+
+      // Set up auto-refresh (every 10 seconds)
+      setInterval(() => {
+          refreshSystemStatus();
+          fetchLogContent();
+      }, 10000);
+
+      // Flash Teensy functionality
+      const flashBtn = document.getElementById('flash-btn');
+      const flashSpinner = document.getElementById('flash-spinner');
+      const flashTarget = document.getElementById('flash-target');
+
+      flashBtn.addEventListener('click', async () => {
+          // Show spinner
+          flashSpinner.classList.remove('hidden');
+          flashBtn.disabled = true;
+
+          try {
+              const target = flashTarget.value;
+
+              const response = await fetch('/api/flash', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      target: target
+                  })
+              });
+
+              const data = await response.json();
+
+              if (data.status === 'success') {
+                  showMessage(`${data.message}`, 'success');
+
+                  // Switch to flash log tab
+                  logTabs.forEach(t => t.classList.remove('active'));
+                  document.querySelector('.log-tab[data-tab="flash"]').classList.add('active');
+                  currentTab = 'flash';
+                  fetchLogContent();
+
+                  // Set up polling for log updates
+                  const logInterval = setInterval(() => {
+                      fetchLogContent();
+                  }, 2000);
+
+                  // Stop polling after 3 minutes
+                  setTimeout(() => {
+                      clearInterval(logInterval);
+                  }, 180000);
+
+              } else {
+                  showMessage(`Error: ${data.message}`, 'error');
+              }
+
+          } catch (error) {
+              showMessage(`Error: ${error.message}`, 'error');
+          } finally {
+              // Re-enable button after a short delay
+              setTimeout(() => {
+                  flashSpinner.classList.add('hidden');
+                  flashBtn.disabled = false;
+              }, 3000);
+          }
+      });
+
+      // JSON Upload functionality
+      const jsonFileInput = document.getElementById('json-file-input');
+      const jsonUploadBtn = document.getElementById('json-upload-btn');
+      const jsonViewBtn = document.getElementById('json-view-btn');
+      const jsonUploadSpinner = document.getElementById('json-upload-spinner');
+      const jsonPreview = document.getElementById('json-preview');
+
+      // Update file name display when a file is selected
+      const fileNameDisplay = document.getElementById('file-name-display');
+      jsonFileInput.addEventListener('change', () => {
+          if (jsonFileInput.files && jsonFileInput.files.length > 0) {
+              fileNameDisplay.textContent = jsonFileInput.files[0].name;
+          } else {
+              fileNameDisplay.textContent = 'No file chosen';
+          }
+      });
+
+      jsonUploadBtn.addEventListener('click', async () => {
+          if (!jsonFileInput.files || jsonFileInput.files.length === 0) {
+              showMessage('Please select a file to upload', 'error');
+              return;
+          }
+
+          // Show spinner
+          jsonUploadSpinner.classList.remove('hidden');
+          jsonUploadBtn.disabled = true;
+
+          try {
+              const file = jsonFileInput.files[0];
+              const formData = new FormData();
+              formData.append('file', file);
+
+              const response = await fetch('/api/upload_shell_json', {
+                  method: 'POST',
+                  body: formData
+              });
+
+              const data = await response.json();
+
+              if (data.status === 'success') {
+                  showMessage(`${data.message}`, 'success');
+
+                  // Switch to jsonparse log tab if restart needed
+                  if (data.restart_needed) {
+                      logTabs.forEach(t => t.classList.remove('active'));
+                      document.querySelector('.log-tab[data-tab="jsonparse"]').classList.add('active');
+                      currentTab = 'jsonparse';
+                      fetchLogContent();
+                  }
+
+                  // Clear file input
+                  jsonFileInput.value = '';
+                  fileNameDisplay.textContent = 'No file chosen';
+
+              } else {
+                  showMessage(`Error: ${data.message}`, 'error');
+              }
+
+          } catch (error) {
+              showMessage(`Error: ${error.message}`, 'error');
+          } finally {
+              // Re-enable button
+              jsonUploadSpinner.classList.add('hidden');
+              jsonUploadBtn.disabled = false;
+          }
+      });
+
+      jsonViewBtn.addEventListener('click', async () => {
+          try {
+              const response = await fetch('/api/get_shell_json');
+              const data = await response.json();
+
+              if (data.status === 'success') {
+                  // Try to pretty-print JSON
+                  try {
+                      const jsonObj = JSON.parse(data.content);
+                      jsonPreview.textContent = JSON.stringify(jsonObj, null, 2);
+                  } catch (e) {
+                      // If parsing fails, just show the raw content
+                      jsonPreview.textContent = data.content;
+                  }
+
+                  // Show the preview
+                  jsonPreview.style.display = 'block';
+
+              } else {
+                  showMessage(`Error: ${data.message}`, 'error');
+              }
+
+          } catch (error) {
+              showMessage(`Error: ${error.message}`, 'error');
+          }
+      });
+    </script>
+  </body>
+</html>

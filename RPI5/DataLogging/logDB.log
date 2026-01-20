@@ -1,0 +1,326 @@
+2026-01-16 12:38:27,969 [INFO] LogDB starting...
+2026-01-16 12:38:27,969 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 12:38:27,971 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 12:38:27,971 [INFO] Monitoring: DataLogging/serialDebug.log
+2026-01-16 12:38:27,972 [INFO] Error: Log file not found at DataLogging/serialDebug.log
+2026-01-16 12:39:39,360 [INFO] LogDB starting...
+2026-01-16 12:39:39,361 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 12:39:39,361 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 12:39:39,361 [INFO] Monitoring: DataLogging/serialDebug.log
+2026-01-16 12:39:39,361 [INFO] Error: Log file not found at DataLogging/serialDebug.log
+2026-01-16 12:41:55,804 [INFO] LogDB starting...
+2026-01-16 12:41:55,804 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 12:41:55,804 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 12:41:55,810 [INFO] Monitoring: DataLogging/serialDebug.log
+2026-01-16 12:41:55,810 [INFO] Error: Log file not found at DataLogging/serialDebug.log
+2026-01-16 12:50:46,838 [INFO] LogDB starting...
+2026-01-16 12:50:46,838 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 12:50:46,838 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 12:50:46,838 [INFO] Monitoring: DataLogging/serialDebug.log
+2026-01-16 12:50:46,838 [INFO] Error: Log file not found at DataLogging/serialDebug.log
+2026-01-16 12:50:58,943 [INFO] LogDB starting...
+2026-01-16 12:50:58,943 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 12:50:58,943 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 12:50:58,943 [INFO] Monitoring: DataLogging/serialDebug.log
+2026-01-16 12:50:58,943 [INFO] Error: Log file not found at DataLogging/serialDebug.log
+2026-01-16 12:53:35,332 [INFO] LogDB starting...
+2026-01-16 12:53:35,332 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 12:53:35,332 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 12:53:35,335 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 12:53:35,335 [INFO] Error: Log file not found at C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 12:56:26,764 [INFO] LogDB starting...
+2026-01-16 12:56:26,764 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 12:56:26,764 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 12:56:26,764 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 12:56:26,764 [INFO] Error: Log file not found at C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 12:57:30,413 [INFO] LogDB starting...
+2026-01-16 12:57:30,413 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 12:57:30,424 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 12:57:30,425 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 12:57:30,425 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 12:57:30,425 [INFO] Starting from position 0
+2026-01-16 12:57:30,427 [INFO] Using 1000.0ms check interval
+2026-01-16 13:05:19,156 [INFO] LogDB starting...
+2026-01-16 13:05:19,156 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 13:05:19,156 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 13:05:19,156 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 13:05:19,156 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 13:05:19,156 [INFO] Starting from position 96
+2026-01-16 13:05:19,156 [INFO] Using 1000.0ms check interval
+2026-01-16 13:09:11,447 [INFO] LogDB starting...
+2026-01-16 13:09:11,447 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 13:09:11,447 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 13:09:11,447 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 13:09:11,447 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 13:09:11,447 [INFO] Starting from position 96
+2026-01-16 13:09:11,447 [INFO] Using 1000.0ms check interval
+2026-01-16 13:12:23,785 [INFO] LogDB starting...
+2026-01-16 13:12:23,785 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 13:12:23,794 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 13:12:23,794 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 13:12:23,794 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 13:12:23,794 [INFO] Starting from position 96
+2026-01-16 13:12:23,794 [INFO] Using 1000.0ms check interval
+2026-01-16 13:19:15,810 [INFO] LogDB starting...
+2026-01-16 13:19:15,810 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 13:19:15,810 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 13:19:15,810 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 13:19:15,810 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 13:19:15,816 [INFO] Starting from position 96
+2026-01-16 13:19:15,816 [INFO] Using 1000.0ms check interval
+2026-01-16 13:21:52,617 [INFO] LogDB starting...
+2026-01-16 13:21:52,628 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 13:21:52,628 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 13:21:52,628 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 13:21:52,628 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 13:21:52,628 [INFO] Starting from position 96
+2026-01-16 13:21:52,628 [INFO] Using 1000.0ms check interval
+2026-01-16 13:28:36,725 [INFO] LogDB starting...
+2026-01-16 13:28:36,725 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 13:28:36,725 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 13:28:36,725 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 13:28:36,725 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 13:28:36,725 [INFO] Starting from position 96
+2026-01-16 13:28:36,725 [INFO] Using 1000.0ms check interval
+2026-01-16 13:33:50,234 [INFO] LogDB starting...
+2026-01-16 13:33:50,234 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 13:33:50,234 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 13:33:50,234 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 13:33:50,234 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 13:33:50,234 [INFO] Starting from position 96
+2026-01-16 13:33:50,234 [INFO] Using 1000.0ms check interval
+2026-01-16 13:33:50,243 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:33:50,243 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:33:50,244 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:33:50,244 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:33:50,244 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:33:50,244 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:31,753 [INFO] LogDB starting...
+2026-01-16 13:38:31,753 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 13:38:31,753 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 13:38:31,753 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 13:38:31,753 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 13:38:31,753 [INFO] Starting from position 645
+2026-01-16 13:38:31,753 [INFO] Using 1000.0ms check interval
+2026-01-16 13:38:31,753 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:31,753 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:31,753 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:31,753 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:31,753 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:31,753 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:31,753 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:43,812 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:43,815 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:43,823 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:43,823 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:38:43,823 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:40:04,016 [INFO] LogDB starting...
+2026-01-16 13:40:04,019 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 13:40:04,019 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 13:40:04,019 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 13:40:04,019 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 13:40:04,019 [INFO] Starting from position 0
+2026-01-16 13:40:04,019 [INFO] Using 1000.0ms check interval
+2026-01-16 13:40:20,089 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:40:20,089 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:40:20,089 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:40:20,089 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:40:20,091 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:40:20,091 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 13:40:20,091 [ERROR] Failed DB insert from XIAOESP32: invalid integer value "${DB_PORT}" for connection option "port"
+
+2026-01-16 14:19:02,406 [INFO] LogDB starting...
+2026-01-16 14:19:02,406 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 14:19:02,406 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 14:23:14,520 [INFO] LogDB starting...
+2026-01-16 14:23:14,520 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 14:23:14,523 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 14:23:14,525 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 14:23:14,525 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 14:23:14,525 [INFO] Starting from position 579
+2026-01-16 14:23:14,528 [INFO] Using 1000.0ms check interval
+2026-01-16 14:23:31,668 [ERROR] Failed DB insert from XIAOESP32: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-01-16 15:08:23,542 [INFO] LogDB starting...
+2026-01-16 15:08:23,542 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-16 15:08:23,542 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-16 15:08:23,542 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-16 15:08:23,542 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-16 15:08:23,544 [INFO] Starting from position 579
+2026-01-16 15:08:23,544 [INFO] Using 1000.0ms check interval
+2026-01-16 15:08:23,651 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:08:23,719 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:08:23,789 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:08:23,849 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:06,583 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:06,650 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:06,734 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:06,800 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:06,882 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:06,958 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,030 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,102 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,176 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,245 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,331 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,404 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,474 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,546 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,609 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,688 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,752 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,811 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,890 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:07,984 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,066 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,149 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,212 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,276 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,340 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,419 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,488 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,551 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,615 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,680 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,748 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,826 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,885 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:08,960 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,034 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,103 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,167 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,248 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,326 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,401 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,487 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,557 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,648 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,711 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,792 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,856 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:09,937 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,001 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,077 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,141 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,210 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,301 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,385 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,448 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,512 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,608 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,672 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,747 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,812 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,874 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:10,943 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,011 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,085 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,152 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,219 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,296 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,371 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,439 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,522 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,590 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,679 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,733 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,830 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,912 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:11,985 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-16 15:11:12,078 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 09:26:04,244 [INFO] LogDB starting...
+2026-01-19 09:26:04,244 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-19 09:26:04,244 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-19 09:26:04,244 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-19 09:26:04,250 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-19 09:26:04,251 [INFO] Starting from position 5699
+2026-01-19 09:26:04,251 [INFO] Using 1000.0ms check interval
+2026-01-19 09:26:29,454 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,476 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,506 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,530 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,569 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,594 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,616 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,656 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,678 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,709 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,755 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,782 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,816 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,834 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,867 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 09:26:29,893 [ERROR] Failed DB insert from XIAOESP32: connection to server at "192.168.48.157", port 5432 failed: FATAL:  database "env_chamber_temperature" does not exist
+
+2026-01-19 10:21:23,410 [INFO] LogDB starting...
+2026-01-19 10:21:23,410 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-19 10:21:23,415 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-19 10:21:23,417 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-19 10:21:23,417 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-19 10:21:23,417 [INFO] Starting from position 7928
+2026-01-19 10:21:23,417 [INFO] Using 1000.0ms check interval
+2026-01-19 10:21:23,437 [INFO] Processed 100 lines, 0 sensor readings
+2026-01-19 10:21:23,453 [INFO] Processed 200 lines, 0 sensor readings
+2026-01-19 10:24:32,946 [INFO] LogDB starting...
+2026-01-19 10:24:32,946 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-19 10:24:32,946 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-19 10:24:32,946 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-19 10:24:32,946 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-19 10:24:32,946 [INFO] Starting from position 14804
+2026-01-19 10:24:32,946 [INFO] Using 1000.0ms check interval
+2026-01-19 10:24:33,060 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,140 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,224 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,294 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,360 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,439 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,506 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,586 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,660 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,752 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,816 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,887 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:33,951 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-19 10:24:34,027 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.

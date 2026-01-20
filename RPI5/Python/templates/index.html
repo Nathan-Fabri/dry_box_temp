@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DryBox Control Panel</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header-main">
+        <h1>DryBox Control Panel</h1>
+        <div>
+          <a href="/debug" class="nav-link">Debug Panel →</a>
+          <span
+            class="status-badge {% if system_running %}status-running{% else %}status-stopped{% endif %}"
+          >
+            {% if system_running %}RUNNING{% else %}STOPPED{% endif %}
+          </span>
+        </div>
+      </header>
+
+      <div id="message-area" class="hidden message-banner"></div>
+
+      <div class="controls">
+        <button
+          id="start-btn"
+          class="btn btn-start"
+          {%
+          if
+          system_running
+          %}disabled{%
+          endif
+          %}
+        >
+          <span id="start-spinner" class="spinner hidden"></span> Start DryBox
+        </button>
+        <button
+          id="stop-btn"
+          class="btn btn-stop"
+          {%
+          if
+          not
+          system_running
+          %}disabled{%
+          endif
+          %}
+        >
+          <span id="stop-spinner" class="spinner hidden"></span> Stop DryBox
+        </button>
+        <button id="refresh-btn" class="btn btn-refresh">Refresh Status</button>
+      </div>
+
+      <div
+        id="stop-options"
+        class="stop-options {% if not system_running %}hidden{% endif %}"
+      >
+        <h3>Stop Options</h3>
+        <div class="option-group">
+          <input type="checkbox" id="force-stop" name="force-stop" />
+          <label for="force-stop"
+            >Force Stop (Immediately kill processes)</label
+          >
+        </div>
+        <div class="option-group">
+          <input
+            type="checkbox"
+            id="ensure-alloff"
+            name="ensure-alloff"
+            checked
+          />
+          <label for="ensure-alloff"
+            >Ensure ALLOFF (Send shutdown signals to Teensy controllers)</label
+          >
+        </div>
+        <div class="option-group">
+          <label for="timeout">Shutdown Timeout (seconds):</label>
+          <input
+            type="number"
+            id="timeout"
+            name="timeout"
+            min="1"
+            max="300"
+            value="3"
+          />
+        </div>
+      </div>
+
+      <div class="last-action" id="last-action">
+        {% if last_action %} Last action: {{ last_action }} at {{
+        last_action_time }} {% endif %}
+      </div>
+
+      <div class="layer-control-section">
+        <h3>Shell Layer Control</h3>
+        <div class="layer-status">
+          <span id="layer-info">Layer: </span>
+          <div class="layer-progress-container">
+            <div id="layer-progress-bar" class="layer-progress-bar"></div>
+          </div>
+          <div class="step-progress-container">
+            <div class="step-label">Step progress:</div>
+            <div class="step-progress-bar-container">
+              <div id="step-progress-bar" class="step-progress-bar"></div>
+            </div>
+          </div>
+          <div class="time-info">
+            <span id="elapsed-time">Elapsed: 0m 0s</span> |
+            <span id="remaining-time">Remaining: 0m 0s</span>
+          </div>
+          <div class="completion-info">
+            <span id="completion-time">Estimated completion: --</span>
+          </div>
+        </div>
+        <div class="layer-controls">
+          <button id="prev-layer-btn" class="btn btn-prev-layer" disabled>
+            <span id="prev-layer-spinner" class="spinner hidden"></span>
+            Previous Layer
+          </button>
+          <button id="next-layer-btn" class="btn btn-next-layer" disabled>
+            <span id="next-layer-spinner" class="spinner hidden"></span> Next
+            Layer
+          </button>
+        </div>
+        <div class="step-controls">
+          <button id="prev-step-btn" class="btn btn-prev-step" disabled>
+            <span id="prev-step-spinner" class="spinner hidden"></span> Previous
+            Step
+          </button>
+          <button id="next-step-btn" class="btn btn-next-step" disabled>
+            <span id="next-step-spinner" class="spinner hidden"></span> Next
+            Step
+          </button>
+        </div>
+        <div class="jump-layer-controls">
+          <label for="jump-layer-input">Jump to Layer:</label>
+          <input
+            type="number"
+            id="jump-layer-input"
+            class="jump-layer-input"
+            min="1"
+            value="1"
+          />
+          <button id="jump-layer-btn" class="btn btn-jump-layer" disabled>
+            <span id="jump-layer-spinner" class="spinner hidden"></span> Jump
+          </button>
+        </div>
+        <p class="layer-info">
+          Control the current shell layer and steps. Layer buttons navigate
+          between layers, while step buttons navigate within the current layer.
+        </p>
+      </div>
+
+      <!-- Thermal Camera Section -->
+      <div class="thermal-camera-section">
+        <h3>🌡️ Thermal Camera</h3>
+        <div class="thermal-status">
+          <span id="thermal-status">Status: </span>
+          <button
+            id="start-thermal-btn"
+            class="btn btn-start"
+            style="margin-left: 10px"
+          >
+            Start Camera
+          </button>
+          <button
+            id="stop-thermal-btn"
+            class="btn btn-stop"
+            disabled
+            style="margin-left: 5px"
+          >
+            Stop Camera
+          </button>
+        </div>
+
+        <div class="thermal-container">
+          <div class="thermal-video-container">
+            <img
+              id="thermal-stream"
+              class="thermal-stream"
+              src="/thermal_feed"
+              alt="Thermal Camera Feed"
+              style="display: none"
+            />
+            <div id="thermal-placeholder" class="thermal-placeholder">
+              <p>🎥 Click "Start Camera" to begin thermal imaging</p>
+              <p style="font-size: 0.9em; color: #666">
+                Requires TOPDON TC001 or compatible thermal camera
+              </p>
+            </div>
+          </div>
+
+          <div class="thermal-controls">
+            <div class="thermal-control-group">
+              <h4>Temperature Measurement</h4>
+              <div class="temp-measurement-buttons">
+                <button id="add-temp-point-btn" class="btn btn-secondary">
+                  📍 Add Measurement Point
+                </button>
+                <button id="remove-temp-point-btn" class="btn btn-secondary">
+                  ❌ Remove Point
+                </button>
+              </div>
+              <p style="font-size: 0.8em; color: #666; margin-top: 5px">
+                Click "Add Point" then click on the thermal image to measure
+                temperature at that location
+              </p>
+            </div>
+
+            <div class="thermal-control-group">
+              <h4>Region of Interest</h4>
+              <div class="roi-buttons">
+                <button id="draw-roi-btn" class="btn btn-secondary">
+                  🔲 Draw Bounding Box
+                </button>
+                <button id="clear-roi-btn" class="btn btn-secondary">
+                  🗑️ Clear ROI
+                </button>
+              </div>
+              <p style="font-size: 0.8em; color: #666; margin-top: 5px">
+                Draw a box to limit MIN/MAX temperature readings to that area
+                only
+              </p>
+            </div>
+
+            <div class="thermal-control-group">
+              <h4>Color Maps</h4>
+              <div class="colormap-buttons">
+                <button
+                  class="btn btn-secondary colormap-btn"
+                  onclick="changeThermalColormap('inferno')"
+                >
+                  Inferno
+                </button>
+                <button
+                  class="btn btn-secondary colormap-btn"
+                  onclick="changeThermalColormap('jet')"
+                >
+                  Jet
+                </button>
+                <button
+                  class="btn btn-secondary colormap-btn"
+                  onclick="changeThermalColormap('hot')"
+                >
+                  Hot
+                </button>
+                <button
+                  class="btn btn-secondary colormap-btn"
+                  onclick="changeThermalColormap('cool')"
+                >
+                  Cool
+                </button>
+              </div>
+            </div>
+
+            <div class="thermal-readings">
+              <h4>Temperature Readings</h4>
+              <div class="temp-item">
+                <span>Minimum:</span>
+                <span id="thermal-min-temp">--°C</span>
+              </div>
+              <div class="temp-item">
+                <span>Maximum:</span>
+                <span id="thermal-max-temp">--°C</span>
+              </div>
+              <div class="temp-item">
+                <span>Average:</span>
+                <span id="thermal-avg-temp">--°C</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Elements
+      const startBtn = document.getElementById('start-btn');
+      const stopBtn = document.getElementById('stop-btn');
+      const refreshBtn = document.getElementById('refresh-btn');
+      const startSpinner = document.getElementById('start-spinner');
+      const stopSpinner = document.getElementById('stop-spinner');
+      const statusBadge = document.querySelector('.status-badge');
+      const stopOptions = document.getElementById('stop-options');
+      const messageArea = document.getElementById('message-area');
+      const lastActionElement = document.getElementById('last-action');
+
+      // Initial state
+      let isSystemRunning = {{ 'true' if system_running else 'false' }};
+
+      // Start button action - now opens configuration modal
+      startBtn.addEventListener('click', () => {
+          if (isSystemRunning) {
+              showMessage('DryBox system is already running', 'error');
+              return;
+          }
+          openConfigModal();
+      });
+
+      // Stop button action
+      stopBtn.addEventListener('click', async () => {
+          if (!isSystemRunning) return;
+
+          // Show spinner
+          stopSpinner.classList.remove('hidden');
+          stopBtn.disabled = true;
+
+          try {
+              // Get stop options
+              const forceStop = document.getElementById('force-stop').checked;
+              const ensureAlloff = document.getElementById('ensure-alloff').checked;
+              const timeout = document.getElementById('timeout').value;
+
+              const response = await fetch('/api/stop', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      force: forceStop,
+                      ensure_alloff: ensureAlloff,
+                      timeout: parseInt(timeout)
+                  })
+              });
+
+              const data = await response.json();
+
+              if (data.status === 'success') {
+                  showMessage('DryBox system stop command executed', 'success');
+                  updateSystemStatus(data.system_running);
+              } else {
+                  showMessage(`Error: ${data.message}`, 'error');
+                  updateSystemStatus(data.system_running);
+              }
+
+          } catch (error) {
+              showMessage(`Error: ${error.message}`, 'error');
+          } finally {
+              stopSpinner.classList.add('hidden');
+              refreshSystemStatus();
+          }
+      });
+
+      // Refresh button action
+      refreshBtn.addEventListener('click', () => {
+          refreshSystemStatus();
+      });
+
+      // Function to update UI based on system status
+      function updateSystemStatus(running) {
+          isSystemRunning = running;
+
+          // Update status badge
+          statusBadge.textContent = running ? 'RUNNING' : 'STOPPED';
+          statusBadge.className = `status-badge ${running ? 'status-running' : 'status-stopped'}`;
+
+          // Update buttons
+          startBtn.disabled = running;
+          stopBtn.disabled = !running;
+
+          // Show/hide stop options
+          stopOptions.classList.toggle('hidden', !running);
+
+          // Fetch status to update last action info
+          fetch('/api/status')
+              .then(res => res.json())
+              .then(data => {
+                  if (data.last_action) {
+                      lastActionElement.textContent = `Last action: ${data.last_action} at ${data.last_action_time}`;
+                  }
+              });
+      }
+
+      // Function to refresh system status
+      function refreshSystemStatus() {
+          fetch('/api/status')
+              .then(res => res.json())
+              .then(data => {
+                  updateSystemStatus(data.system_running);
+              })
+              .catch(error => {
+                  console.error('Error fetching status:', error);
+              });
+      }
+
+      // Function to show message
+      function showMessage(message, type) {
+          messageArea.textContent = message;
+          messageArea.className = `message-banner message-${type}`;
+          messageArea.classList.remove('hidden');
+
+          // Auto-hide after 5 seconds
+          setTimeout(() => {
+              messageArea.classList.add('hidden');
+          }, 5000);
+      }
+
+      // Set up auto-refresh (every 10 seconds)
+      setInterval(() => {
+          refreshSystemStatus();
+      }, 10000);
+
+      // Layer Control functionality
+      const prevLayerBtn = document.getElementById('prev-layer-btn');
+      const nextLayerBtn = document.getElementById('next-layer-btn');
+      const prevStepBtn = document.getElementById('prev-step-btn');
+      const nextStepBtn = document.getElementById('next-step-btn');
+      const jumpLayerBtn = document.getElementById('jump-layer-btn');
+      const jumpLayerInput = document.getElementById('jump-layer-input');
+      const prevLayerSpinner = document.getElementById('prev-layer-spinner');
+      const nextLayerSpinner = document.getElementById('next-layer-spinner');
+      const prevStepSpinner = document.getElementById('prev-step-spinner');
+      const nextStepSpinner = document.getElementById('next-step-spinner');
+      const jumpLayerSpinner = document.getElementById('jump-layer-spinner');
+      const layerInfo = document.getElementById('layer-info');
+      const layerProgressBar = document.getElementById('layer-progress-bar');
+
+      // Function to update layer info UI
+      async function updateLayerInfo() {
+          if (!document.hidden) {
+              try {
+                  const response = await fetch('/api/get_current_layer');
+                  const data = await response.json();
+
+                  if (data.status === 'success') {
+                      const currentLayer = data.current_layer;
+                      const totalLayers = data.total_layers;
+                      const layerName = data.layer_name;
+                      const currentStep = data.current_step;
+                      const totalSteps = data.total_steps;
+                      const elapsedTime = data.elapsed_time || 0;
+                      const remainingTime = data.remaining_time || 0;
+
+                      // Update jump layer input max value
+                      jumpLayerInput.max = totalLayers;
+
+                      // Update layer info text
+                      let infoText = `Layer: ${currentLayer}/${totalLayers} - ${layerName}`;
+
+                      // Add step information if available
+                      if (totalSteps > 0) {
+                          infoText += ` (Step ${currentStep}/${totalSteps})`;
+                      }
+
+                      layerInfo.textContent = infoText;
+
+                      // Update progress bar
+                      const progressPercent = (currentLayer / totalLayers) * 100;
+                      layerProgressBar.style.width = `${progressPercent}%`;
+
+                      // Update step progress bar if steps are available
+                      const stepProgressBar = document.getElementById('step-progress-bar');
+                      if (totalSteps > 0 && currentStep > 0) {
+                          const stepProgressPercent = (currentStep / totalSteps) * 100;
+                          stepProgressBar.style.width = `${stepProgressPercent}%`;
+                      } else {
+                          stepProgressBar.style.width = '0%';
+                      }
+
+                      // Update time information
+                      const elapsedMinutes = Math.floor(elapsedTime / 60);
+                      const elapsedSeconds = elapsedTime % 60;
+                      const remainingMinutes = Math.floor(remainingTime / 60);
+                      const remainingSeconds = remainingTime % 60;
+
+                      document.getElementById('elapsed-time').textContent =
+                          `Elapsed: ${elapsedMinutes}m ${elapsedSeconds}s`;
+                      document.getElementById('remaining-time').textContent =
+                          `Remaining: ${remainingMinutes}m ${remainingSeconds}s`;
+
+                      // Calculate and display estimated completion time
+                      if (remainingTime > 0) {
+                          const now = new Date();
+                          const completionTime = new Date(now.getTime() + remainingTime * 1000);
+                          const timeString = completionTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                          document.getElementById('completion-time').textContent =
+                              `Estimated completion: ${timeString}`;
+                      } else {
+                          document.getElementById('completion-time').textContent =
+                              `Estimated completion: --`;
+                      }
+
+                      // Enable/disable layer navigation buttons
+                      prevLayerBtn.disabled = !window.systemRunning || currentLayer <= 1;
+                      nextLayerBtn.disabled = !window.systemRunning || currentLayer >= totalLayers;
+                      jumpLayerBtn.disabled = !window.systemRunning;
+
+                      // Enable/disable step navigation buttons
+                      prevStepBtn.disabled = !window.systemRunning || currentStep <= 1;
+                      nextStepBtn.disabled = !window.systemRunning || currentStep >= totalSteps;
+                  } else {
+                      layerInfo.textContent = 'Layer information not available';
+                      layerProgressBar.style.width = '0%';
+                      document.getElementById('step-progress-bar').style.width = '0%';
+                      prevLayerBtn.disabled = true;
+                      nextLayerBtn.disabled = true;
+                  }
+              } catch (error) {
+                  console.error('Error fetching layer info:', error);
+                  layerInfo.textContent = 'Error getting layer information';
+                  layerProgressBar.style.width = '0%';
+                  prevLayerBtn.disabled = true;
+                  nextLayerBtn.disabled = true;
+              }
+          }
+      }
+
+      // Poll for layer info updates
+      let layerInfoInterval;
+
+      function startLayerInfoPolling() {
+          updateLayerInfo();
+          layerInfoInterval = setInterval(updateLayerInfo, 5000); // Update every 5 seconds
+      }
+
+      function stopLayerInfoPolling() {
+          clearInterval(layerInfoInterval);
+      }
+
+      // Start polling when page loads
+      startLayerInfoPolling();
+
+      // Handle visibility change to avoid unnecessary polling when tab is not visible
+      document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+              stopLayerInfoPolling();
+          } else {
+              startLayerInfoPolling();
+          }
+      });
+
+      // Previous layer button click handler
+      prevLayerBtn.addEventListener('click', async () => {
+          if (prevLayerBtn.disabled) return;
+
+          prevLayerSpinner.classList.remove('hidden');
+          prevLayerBtn.disabled = true;
+
+          try {
+              const response = await fetch('/api/prev_layer', { method: 'POST' });
+              const data = await response.json();
+
+              if (data.status === 'success') {
+                  showMessage(`${data.message}`, 'success');
+
+                  // Update layer info immediately after sending command
+                  setTimeout(updateLayerInfo, 1000);
+              } else {
+                  showMessage(`Error: ${data.message}`, 'error');
+              }
+          } catch (error) {
+              showMessage(`Error: ${error.message}`, 'error');
+          } finally {
+              setTimeout(() => {
+                  prevLayerSpinner.classList.add('hidden');
+                  updateLayerInfo(); // Check current state to update button enabled state
+              }, 2000);
+          }
+      });
+
+      // Next layer button click handler
+      nextLayerBtn.addEventListener('click', async () => {
+          if (nextLayerBtn.disabled) return;
+
+          nextLayerSpinner.classList.remove('hidden');
+          nextLayerBtn.disabled = true;
+
+          try {
+              const response = await fetch('/api/next_layer', { method: 'POST' });
+              const data = await response.json();
+
+              if (data.status === 'success') {
+                  showMessage(`${data.message}`, 'success');
+
+                  // Update layer info immediately after sending command
+                  setTimeout(updateLayerInfo, 1000);
+              } else {
+                  showMessage(`Error: ${data.message}`, 'error');
+              }
+          } catch (error) {
+              showMessage(`Error: ${error.message}`, 'error');
+          } finally {
+              setTimeout(() => {
+                  nextLayerSpinner.classList.add('hidden');
+                  updateLayerInfo(); // Check current state to update button enabled state
+              }, 2000);
+          }
+      });
+
+      // Jump to layer button click handler
+      jumpLayerBtn.addEventListener('click', async () => {
+          if (jumpLayerBtn.disabled) return;
+
+          // Get the target layer from the input
+          const targetLayer = parseInt(jumpLayerInput.value);
+          if (isNaN(targetLayer) || targetLayer < 1) {
+              showMessage('Please enter a valid layer number', 'error');
+              return;
+          }
+
+          jumpLayerSpinner.classList.remove('hidden');
+          jumpLayerBtn.disabled = true;
+
+          try {
+              const response = await fetch('/api/jump_to_layer', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      target_layer: targetLayer
+                  })
+              });
+
+              const data = await response.json();
+
+              if (data.status === 'success') {
+                  showMessage(`${data.message}`, 'success');
+
+                  // Update layer info immediately after sending command
+                  setTimeout(updateLayerInfo, 1000);
+              } else {
+                  showMessage(`Error: ${data.message}`, 'error');
+              }
+          } catch (error) {
+              showMessage(`Error: ${error.message}`, 'error');
+          } finally {
+              setTimeout(() => {
+                  jumpLayerSpinner.classList.add('hidden');
+                  updateLayerInfo(); // Check current state to update button enabled state
+              }, 2000);
+          }
+      });
+
+      // Previous step button click handler
+      prevStepBtn.addEventListener('click', async () => {
+          if (prevStepBtn.disabled) return;
+
+          prevStepSpinner.classList.remove('hidden');
+          prevStepBtn.disabled = true;
+
+          try {
+              const response = await fetch('/api/prev_step', { method: 'POST' });
+              const data = await response.json();
+
+              if (data.status === 'success') {
+                  showMessage(`${data.message}`, 'success');
+
+                  // Update layer info immediately after sending command
+                  setTimeout(updateLayerInfo, 1000);
+              } else {
+                  showMessage(`Error: ${data.message}`, 'error');
+              }
+          } catch (error) {
+              showMessage(`Error: ${error.message}`, 'error');
+          } finally {
+              setTimeout(() => {
+                  prevStepSpinner.classList.add('hidden');
+                  updateLayerInfo(); // Check current state to update button enabled state
+              }, 2000);
+          }
+      });
+
+      // Next step button click handler
+      nextStepBtn.addEventListener('click', async () => {
+          if (nextStepBtn.disabled) return;
+
+          nextStepSpinner.classList.remove('hidden');
+          nextStepBtn.disabled = true;
+
+          try {
+              const response = await fetch('/api/next_step', { method: 'POST' });
+              const data = await response.json();
+
+              if (data.status === 'success') {
+                  showMessage(`${data.message}`, 'success');
+
+                  // Update layer info immediately after sending command
+                  setTimeout(updateLayerInfo, 1000);
+              } else {
+                  showMessage(`Error: ${data.message}`, 'error');
+              }
+          } catch (error) {
+              showMessage(`Error: ${error.message}`, 'error');
+          } finally {
+              setTimeout(() => {
+                  nextStepSpinner.classList.add('hidden');
+                  updateLayerInfo(); // Check current state to update button enabled state
+              }, 2000);
+          }
+      });
+
+      // Update layer controls based on system status
+      function updateLayerControlsStatus(isRunning) {
+          window.systemRunning = isRunning;
+          if (!isRunning) {
+              prevLayerBtn.disabled = true;
+              nextLayerBtn.disabled = true;
+              prevStepBtn.disabled = true;
+              nextStepBtn.disabled = true;
+              jumpLayerBtn.disabled = true;
+              layerInfo.textContent = 'Layer control available when system is running';
+          } else {
+              updateLayerInfo();
+          }
+      }
+
+      // Update layer controls on page load
+      updateLayerControlsStatus(statusBadge.classList.contains('status-running'));
+
+      // Update layer controls when system status changes
+      const originalUpdateSystemStatus = updateSystemStatus;
+      updateSystemStatus = function(running) {
+          originalUpdateSystemStatus(running);
+          updateLayerControlsStatus(running);
+      };
+
+      // Configuration Modal Functions
+      // Global variables for configuration
+      let currentShellConfig = { layers: [] };
+      let currentIdleConfig = {
+          ambient_temperature: 26,
+          shell_temperature: 0,
+          humidity: 0,
+          shell_speed: 0,
+          fan_speed: 0
+      };
+
+      // Modal functions
+      function openConfigModal() {
+          document.getElementById('configModal').style.display = 'block';
+          loadCurrentConfig();
+      }
+
+      function closeModal() {
+          document.getElementById('configModal').style.display = 'none';
+      }
+
+      function showTab(tabName) {
+          // Hide all tabs
+          document.querySelectorAll('.tab-content').forEach(tab => {
+              tab.classList.remove('active');
+          });
+          document.querySelectorAll('.tab-button').forEach(button => {
+              button.classList.remove('active');
+          });
+
+          // Show selected tab
+          document.getElementById(tabName + 'Tab').classList.add('active');
+          document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active');
+      }
+
+      // Load current configuration from server
+      async function loadCurrentConfig() {
+          try {
+              // Load shell configuration
+              const shellResponse = await fetch('/api/get_shell_json');
+              const shellResult = await shellResponse.json();
+
+              if (shellResult.status === 'success') {
+                  const schemaConfig = JSON.parse(shellResult.content);
+                  // Convert from schema format to UI format
+                  currentShellConfig = convertSchemaToUI(schemaConfig);
+                  renderLayersConfig();
+              }
+
+              // Load idle configuration
+              const idleResponse = await fetch('/api/get_idle_config');
+              const idleResult = await idleResponse.json();
+
+              if (idleResult.status === 'success') {
+                  currentIdleConfig = idleResult.config;
+                  renderIdleConfig();
+              }
+          } catch (error) {
+              console.error('Error loading configuration:', error);
+              showMessage('Failed to load current configuration', 'error');
+          }
+      }
+
+      // Convert from schema format (time-based arrays, Kelvin) to UI format (step-based, Celsius)
+      function convertSchemaToUI(schemaConfig) {
+          const uiConfig = { layers: [] };
+
+          if (schemaConfig.shell_layer) {
+              schemaConfig.shell_layer.forEach(layer => {
+                  const uiLayer = {
+                      name: layer.name || 'Unnamed Layer',
+                      steps: []
+                  };
+
+                  // Convert time-based arrays to step-based format
+                  const timeArray = layer.time || [];
+                  const ambientArray = layer.ambient_temperature || [];
+                  const shellArray = layer.shell_temperature || [];
+                  const humidityArray = layer.humidity || [];
+                  const shellSpeedArray = layer.shell_speed || [];
+                  const fanSpeedArray = layer.fan_speed || [];
+
+                  for (let i = 0; i < timeArray.length; i++) {
+                      const duration = i === 0 ? timeArray[i] : timeArray[i] - timeArray[i - 1];
+                      const step = {
+                          duration: duration,
+                          ambient_temperature: ambientArray[i] || 0, // Already in Celsius
+                          shell_temperature: shellArray[i] || 0,     // Already in Celsius
+                          humidity: humidityArray[i] || 0,
+                          shell_speed: shellSpeedArray[i] || 0,
+                          fan_speed: fanSpeedArray[i] || 0
+                      };
+                      uiLayer.steps.push(step);
+                  }
+
+                  uiConfig.layers.push(uiLayer);
+              });
+          }
+
+          return uiConfig;
+      }
+
+      // Render layers configuration
+      function renderLayersConfig() {
+          const layersList = document.getElementById('layersList');
+          layersList.innerHTML = '';
+
+          if (!currentShellConfig.layers || currentShellConfig.layers.length === 0) {
+              layersList.innerHTML = '<p>No layers configured. Add a layer to get started.</p>';
+              return;
+          }
+
+          currentShellConfig.layers.forEach((layer, layerIndex) => {
+              const layerDiv = createLayerConfigElement(layer, layerIndex);
+              layersList.appendChild(layerDiv);
+          });
+      }
+
+      // Create layer configuration element
+      function createLayerConfigElement(layer, layerIndex) {
+          const layerDiv = document.createElement('div');
+          layerDiv.className = 'layer-config';
+          layerDiv.innerHTML = `
+              <div class="layer-header">
+                  <h4>Layer ${layerIndex + 1}: ${layer.name || 'Unnamed Layer'}</h4>
+                  <div class="layer-controls">
+                      <button class="btn btn-secondary btn-sm" onclick="addStep(${layerIndex})">Add Step</button>
+                      <button class="btn btn-danger btn-sm" onclick="removeLayer(${layerIndex})">Remove Layer</button>
+                  </div>
+              </div>
+              <div class="config-row">
+                  <label>Layer Name:</label>
+                  <input type="text" value="${layer.name || ''}" onchange="updateLayerName(${layerIndex}, this.value)">
+              </div>
+              <div id="stepsContainer${layerIndex}">
+                  ${layer.steps ? layer.steps.map((step, stepIndex) => createStepConfigHTML(step, layerIndex, stepIndex)).join('') : ''}
+              </div>
+          `;
+          return layerDiv;
+      }
+
+      // Create step configuration HTML
+      function createStepConfigHTML(step, layerIndex, stepIndex) {
+          return `
+              <div class="step-config">
+                  <div class="step-header">
+                      <h5>Step ${stepIndex + 1}</h5>
+                      <button class="btn btn-danger btn-sm" onclick="removeStep(${layerIndex}, ${stepIndex})">Remove</button>
+                  </div>
+                  <div class="config-row">
+                      <label>Duration (minutes):</label>
+                      <input type="number" value="${step.duration || 0}" min="0" onchange="updateStepValue(${layerIndex}, ${stepIndex}, 'duration', this.value)">
+                  </div>
+                  <div class="config-row">
+                      <label>Ambient Temp (°C):</label>
+                      <input type="number" value="${step.ambient_temperature || 0}" step="0.1" onchange="updateStepValue(${layerIndex}, ${stepIndex}, 'ambient_temperature', this.value)">
+                  </div>
+                  <div class="config-row">
+                      <label>Shell Temp (°C):</label>
+                      <input type="number" value="${step.shell_temperature || 0}" step="0.1" onchange="updateStepValue(${layerIndex}, ${stepIndex}, 'shell_temperature', this.value)">
+                  </div>
+                  <div class="config-row">
+                      <label>Humidity (%):</label>
+                      <input type="number" value="${step.humidity || 0}" step="0.1" min="0" max="100" onchange="updateStepValue(${layerIndex}, ${stepIndex}, 'humidity', this.value)">
+                  </div>
+                  <div class="config-row">
+                      <label>Shell Speed (RPM):</label>
+                      <input type="number" value="${step.shell_speed || 0}" min="0" onchange="updateStepValue(${layerIndex}, ${stepIndex}, 'shell_speed', this.value)">
+                  </div>
+                  <div class="config-row">
+                      <label>Fan Speed (CFM):</label>
+                      <input type="number" value="${step.fan_speed || 0}" min="0" onchange="updateStepValue(${layerIndex}, ${stepIndex}, 'fan_speed', this.value)">
+                  </div>
+              </div>
+          `;
+      }
+
+      // Render idle configuration
+      function renderIdleConfig() {
+          document.getElementById('idleAmbientTemp').value = currentIdleConfig.ambient_temperature || 26;
+          document.getElementById('idleShellTemp').value = currentIdleConfig.shell_temperature || 0;
+          document.getElementById('idleHumidity').value = currentIdleConfig.humidity || 0;
+          document.getElementById('idleShellSpeed').value = currentIdleConfig.shell_speed || 0;
+          document.getElementById('idleFanSpeed').value = currentIdleConfig.fan_speed || 0;
+      }
+
+      // Layer management functions
+      function addLayer() {
+          // Initialize currentShellConfig if it doesn't exist
+          if (!currentShellConfig) {
+              currentShellConfig = { layers: [] };
+          }
+
+          // Initialize layers array if it doesn't exist
+          if (!currentShellConfig.layers) {
+              currentShellConfig.layers = [];
+          }
+
+          const newLayer = {
+              name: `Layer ${currentShellConfig.layers.length + 1}`,
+              steps: [{
+                  duration: 60,
+                  ambient_temperature: 26,
+                  shell_temperature: 0,
+                  humidity: 0,
+                  shell_speed: 0,
+                  fan_speed: 0
+              }]          };
+
+          currentShellConfig.layers.push(newLayer);
+          renderLayersConfig();
+      }
+
+      function removeLayer(layerIndex = null) {
+          if (layerIndex !== null) {
+              currentShellConfig.layers.splice(layerIndex, 1);
+          } else {
+              currentShellConfig.layers.pop();
+          }
+          renderLayersConfig();
+      }
+
+      // Step management functions
+      function addStep(layerIndex) {
+          const newStep = {
+              duration: 60,
+              ambient_temperature: 26,
+              shell_temperature: 0,
+              humidity: 0,
+              shell_speed: 0,
+              fan_speed: 0
+          };
+
+          if (!currentShellConfig.layers[layerIndex].steps) {
+              currentShellConfig.layers[layerIndex].steps = [];
+          }
+
+          currentShellConfig.layers[layerIndex].steps.push(newStep);
+          renderLayersConfig();
+      }
+
+      function removeStep(layerIndex, stepIndex) {
+          currentShellConfig.layers[layerIndex].steps.splice(stepIndex, 1);
+          renderLayersConfig();
+      }
+
+      // Update functions
+      function updateLayerName(layerIndex, newName) {
+          currentShellConfig.layers[layerIndex].name = newName;
+      }
+
+      function updateStepValue(layerIndex, stepIndex, field, value) {
+          if (field === 'duration' || field === 'shell_speed' || field === 'fan_speed') {
+              currentShellConfig.layers[layerIndex].steps[stepIndex][field] = parseInt(value) || 0;
+          } else {
+              currentShellConfig.layers[layerIndex].steps[stepIndex][field] = parseFloat(value) || 0;
+          }
+      }
+
+      // Convert step-based config to schema-expected time-based arrays
+      function convertToSchemaFormat(stepConfig) {
+          const shell_layer = [];
+
+          if (!stepConfig.layers) {
+              return { shell_layer: [] };
+          }
+
+          stepConfig.layers.forEach(layer => {
+              if (!layer.steps || layer.steps.length === 0) {
+                  return;
+              }
+
+              // Initialize arrays for this layer
+              const layerData = {
+                  name: layer.name || 'Unnamed Layer',
+                  ambient_temperature: [],
+                  shell_temperature: [],
+                  humidity: [],
+                  time: [],
+                  shell_speed: [],
+                  fan_speed: []
+              };
+
+              let currentTime = 0;
+
+              // Convert each step to time-based arrays
+              layer.steps.forEach(step => {
+                  // Store temperatures in Celsius (no conversion needed)
+                  const ambientTempC = step.ambient_temperature || 0;
+                  const shellTempC = step.shell_temperature || 0;
+
+                  layerData.ambient_temperature.push(ambientTempC);
+                  layerData.shell_temperature.push(shellTempC);
+                  layerData.humidity.push(step.humidity || 0);
+                  layerData.shell_speed.push(step.shell_speed || 0);
+                  layerData.fan_speed.push(step.fan_speed || 0);
+                  layerData.time.push(currentTime + (step.duration || 0));
+
+                  currentTime += (step.duration || 0);
+              });
+
+              shell_layer.push(layerData);
+          });
+
+          return { shell_layer: shell_layer };
+      }
+
+      // Save configuration and start system
+      async function saveConfigAndStart() {
+          try {
+              // Save idle configuration
+              const idleConfig = {
+                  ambient_temperature: parseFloat(document.getElementById('idleAmbientTemp').value) || 26,
+                  shell_temperature: parseFloat(document.getElementById('idleShellTemp').value) || 0,
+                  humidity: parseFloat(document.getElementById('idleHumidity').value) || 0,
+                  shell_speed: parseInt(document.getElementById('idleShellSpeed').value) || 0,
+                  fan_speed: parseInt(document.getElementById('idleFanSpeed').value) || 0
+              };
+
+              const idleResponse = await fetch('/api/set_idle_config', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(idleConfig)
+              });
+
+              const idleResult = await idleResponse.json();
+              if (idleResult.status !== 'success') {
+                  throw new Error(idleResult.message);
+              }
+
+              // Save shell configuration - convert to schema format
+              const convertedShellConfig = convertToSchemaFormat(currentShellConfig);
+              const shellData = new FormData();
+              const shellBlob = new Blob([JSON.stringify(convertedShellConfig, null, 2)], {
+                  type: 'application/json'
+              });
+              shellData.append('file', shellBlob, 'shellJson.json');
+
+              const shellResponse = await fetch('/api/upload_shell_json', {
+                  method: 'POST',
+                  body: shellData
+              });
+
+              const shellResult = await shellResponse.json();
+              if (shellResult.status !== 'success') {
+                  throw new Error(shellResult.message);
+              }
+
+              // Close modal
+              closeModal();
+
+              // Start the system using the original start function
+              await startSystem();
+
+              showMessage('Configuration saved and DryBox started successfully!', 'success');
+
+          } catch (error) {
+              console.error('Error saving configuration:', error);
+              showMessage('Failed to save configuration: ' + error.message, 'error');
+          }
+      }
+
+      // Original start system function (for modal use)
+      async function startSystem() {
+          if (isSystemRunning) return;
+
+          // Show spinner
+          startSpinner.classList.remove('hidden');
+          startBtn.disabled = true;
+
+          try {
+              const response = await fetch('/api/start', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  }
+              });
+
+              const data = await response.json();
+
+              if (data.status === 'success') {
+                  showMessage('DryBox system started successfully', 'success');
+                  updateSystemStatus(true);
+              } else {
+                  showMessage(`Error: ${data.message}`, 'error');
+                  updateSystemStatus(data.system_running);
+              }
+
+          } catch (error) {
+              showMessage(`Error: ${error.message}`, 'error');
+          } finally {
+              startSpinner.classList.add('hidden');
+              refreshSystemStatus();
+          }
+      }
+
+      // Close modal when clicking outside
+      window.onclick = function(event) {
+          const modal = document.getElementById('configModal');
+          if (event.target === modal) {
+              closeModal();
+          }
+      }
+
+      // Initialize modal functionality when page loads
+      document.addEventListener('DOMContentLoaded', function() {
+          // Add close button functionality
+          const closeBtn = document.querySelector('.close');
+          if (closeBtn) {
+              closeBtn.onclick = closeModal;
+          }
+      });
+
+      // ========================
+      // THERMAL CAMERA FUNCTIONALITY
+      // ========================
+
+      // Thermal camera elements
+      const startThermalBtn = document.getElementById('start-thermal-btn');
+      const stopThermalBtn = document.getElementById('stop-thermal-btn');
+      const thermalStream = document.getElementById('thermal-stream');
+      const thermalPlaceholder = document.getElementById('thermal-placeholder');
+      const thermalStatus = document.getElementById('thermal-status');
+      const addTempPointBtn = document.getElementById('add-temp-point-btn');
+      const removeTempPointBtn = document.getElementById('remove-temp-point-btn');
+      const drawRoiBtn = document.getElementById('draw-roi-btn');
+      const clearRoiBtn = document.getElementById('clear-roi-btn');
+
+      // Thermal camera state
+      let thermalCameraRunning = false;
+      let measurementMode = false;
+      let customMeasurementPoints = [];
+      let roiMode = false;
+      let roiBox = null;
+      let isDrawingRoi = false;
+      let roiStartPoint = null;
+
+      // Start thermal camera
+      if (startThermalBtn) {
+          startThermalBtn.addEventListener('click', async () => {
+              try {
+                  const response = await fetch('/api/thermal/start', { method: 'POST' });
+                  const data = await response.json();
+
+                  if (data.status === 'success') {
+                      thermalCameraRunning = true;
+                      updateThermalUI();
+                      showMessage('Thermal camera started successfully', 'success');
+                      startThermalStatusUpdates();
+                  } else {
+                      showMessage(`Error starting thermal camera: ${data.message}`, 'error');
+                  }
+              } catch (error) {
+                  showMessage(`Error starting thermal camera: ${error.message}`, 'error');
+              }
+          });
+      }
+
+      // Stop thermal camera
+      if (stopThermalBtn) {
+          stopThermalBtn.addEventListener('click', async () => {
+              try {
+                  const response = await fetch('/api/thermal/stop', { method: 'POST' });
+                  const data = await response.json();
+
+                  if (data.status === 'success') {
+                      thermalCameraRunning = false;
+                      updateThermalUI();
+                      showMessage('Thermal camera stopped', 'success');
+                      stopThermalStatusUpdates();
+                  } else {
+                      showMessage(`Error stopping thermal camera: ${data.message}`, 'error');
+                  }
+              } catch (error) {
+                  showMessage(`Error stopping thermal camera: ${error.message}`, 'error');
+              }
+          });
+      }
+
+      // Temperature measurement point functionality
+      if (addTempPointBtn) {
+          addTempPointBtn.addEventListener('click', () => {
+              measurementMode = true;
+              addTempPointBtn.style.background = '#28a745';
+              addTempPointBtn.textContent = '📍 Click on Image';
+              thermalStream.style.cursor = 'crosshair';
+              showMessage('Click on the thermal image to add a measurement point', 'info');
+          });
+      }
+
+      if (removeTempPointBtn) {
+          removeTempPointBtn.addEventListener('click', () => {
+              measurementMode = false;
+              customMeasurementPoints = [];
+              addTempPointBtn.style.background = '';
+              addTempPointBtn.textContent = '📍 Add Measurement Point';
+              thermalStream.style.cursor = 'default';
+              showMessage('All custom measurement points removed', 'success');
+
+              // Send request to backend to clear custom points
+              fetch('/api/thermal/clear_custom_points', { method: 'POST' })
+                  .catch(error => console.log('Error clearing custom points:', error));
+          });
+      }
+
+      // Add click handler to thermal stream for measurement points
+      if (thermalStream) {
+          thermalStream.addEventListener('click', (event) => {
+              if (!measurementMode || !thermalCameraRunning) return;
+
+              const rect = thermalStream.getBoundingClientRect();
+              const x = ((event.clientX - rect.left) / rect.width) * thermalStream.naturalWidth;
+              const y = ((event.clientY - rect.top) / rect.height) * thermalStream.naturalHeight;
+
+              // Add measurement point
+              const point = { x: Math.round(x), y: Math.round(y) };
+              customMeasurementPoints.push(point);
+
+              // Send to backend
+              fetch('/api/thermal/add_custom_point', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(point)
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      showMessage(`Measurement point added at (${point.x}, ${point.y})`, 'success');
+                      // Reset measurement mode
+                      measurementMode = false;
+                      addTempPointBtn.style.background = '';
+                      addTempPointBtn.textContent = '📍 Add Measurement Point';
+                      thermalStream.style.cursor = 'default';
+                  } else {
+                      showMessage(`Error adding measurement point: ${data.error}`, 'error');
+                  }
+              })
+              .catch(error => {
+                  showMessage(`Error adding measurement point: ${error.message}`, 'error');
+              });
+          });
+      }
+
+      // ROI (Region of Interest) functionality
+      if (drawRoiBtn) {
+          drawRoiBtn.addEventListener('click', () => {
+              roiMode = true;
+              drawRoiBtn.style.background = '#20c997';
+              drawRoiBtn.textContent = '🔲 Click and Drag';
+              drawRoiBtn.classList.add('active');
+              thermalStream.style.cursor = 'crosshair';
+              showMessage('Click and drag on the thermal image to draw a bounding box', 'info');
+          });
+      }
+
+      if (clearRoiBtn) {
+          clearRoiBtn.addEventListener('click', () => {
+              clearROI();
+              showMessage('Region of Interest cleared', 'success');
+
+              // Send request to backend to clear ROI
+              fetch('/api/thermal/clear_roi', { method: 'POST' })
+                  .catch(error => console.log('Error clearing ROI:', error));
+          });
+      }
+
+      // Function to clear ROI
+      function clearROI() {
+          roiMode = false;
+          roiBox = null;
+          isDrawingRoi = false;
+          roiStartPoint = null;
+
+          // Reset button appearance
+          if (drawRoiBtn) {
+              drawRoiBtn.style.background = '';
+              drawRoiBtn.textContent = '🔲 Draw Bounding Box';
+              drawRoiBtn.classList.remove('active');
+          }
+
+          if (thermalStream) {
+              thermalStream.style.cursor = 'default';
+          }
+
+          // Remove any existing ROI overlay
+          const existingOverlay = document.querySelector('.roi-overlay');
+          if (existingOverlay) {
+              existingOverlay.remove();
+          }
+      }
+
+      // Add mouse event handlers for ROI drawing on thermal stream
+      if (thermalStream) {
+          let roiOverlay = null;
+
+          thermalStream.addEventListener('mousedown', (event) => {
+              if (!roiMode || !thermalCameraRunning) return;
+
+              // Get the thermal stream's position and dimensions
+              const rect = thermalStream.getBoundingClientRect();
+              const clickX = event.clientX - rect.left;
+              const clickY = event.clientY - rect.top;
+
+              // Check if click is within the actual image bounds
+              if (clickX < 0 || clickY < 0 || clickX > rect.width || clickY > rect.height) {
+                  return;
+              }
+
+              isDrawingRoi = true;
+              roiStartPoint = {
+                  x: clickX,
+                  y: clickY
+              };
+
+              // Create ROI overlay div
+              roiOverlay = document.createElement('div');
+              roiOverlay.className = 'roi-overlay';
+              roiOverlay.style.position = 'absolute';
+              roiOverlay.style.left = (thermalStream.offsetLeft + clickX) + 'px';
+              roiOverlay.style.top = (thermalStream.offsetTop + clickY) + 'px';
+              roiOverlay.style.width = '0px';
+              roiOverlay.style.height = '0px';
+              roiOverlay.style.border = '2px dashed #00ff00';
+              roiOverlay.style.backgroundColor = 'rgba(0, 255, 0, 0.1)';
+              roiOverlay.style.pointerEvents = 'none';
+              roiOverlay.style.zIndex = '1000';
+
+              // Append to thermal video container so it's positioned relative to the image
+              const thermalContainer = thermalStream.parentElement;
+              thermalContainer.appendChild(roiOverlay);
+
+              event.preventDefault();
+          });
+
+          thermalStream.addEventListener('mousemove', (event) => {
+              if (!isDrawingRoi || !roiOverlay || !roiStartPoint) return;
+
+              const rect = thermalStream.getBoundingClientRect();
+              const currentX = event.clientX - rect.left;
+              const currentY = event.clientY - rect.top;
+
+              // Constrain coordinates to image bounds
+              const constrainedX = Math.max(0, Math.min(currentX, rect.width));
+              const constrainedY = Math.max(0, Math.min(currentY, rect.height));
+
+              // Calculate ROI dimensions using container-relative coordinates
+              const width = Math.abs(constrainedX - roiStartPoint.x);
+              const height = Math.abs(constrainedY - roiStartPoint.y);
+              const left = Math.min(constrainedX, roiStartPoint.x);
+              const top = Math.min(constrainedY, roiStartPoint.y);
+
+              // Update overlay position using thermal stream offset + coordinates
+              roiOverlay.style.left = (thermalStream.offsetLeft + left) + 'px';
+              roiOverlay.style.top = (thermalStream.offsetTop + top) + 'px';
+              roiOverlay.style.width = width + 'px';
+              roiOverlay.style.height = height + 'px';
+
+              event.preventDefault();
+          });          thermalStream.addEventListener('mouseup', (event) => {
+              if (!isDrawingRoi || !roiOverlay || !roiStartPoint) return;
+
+              const rect = thermalStream.getBoundingClientRect();
+              const endX = event.clientX - rect.left;
+              const endY = event.clientY - rect.top;
+
+              // Constrain end coordinates to image bounds
+              const constrainedEndX = Math.max(0, Math.min(endX, rect.width));
+              const constrainedEndY = Math.max(0, Math.min(endY, rect.height));
+
+              // Calculate final ROI coordinates (normalized to image coordinates)
+              const x1 = Math.min(roiStartPoint.x, constrainedEndX) / rect.width * thermalStream.naturalWidth;
+              const y1 = Math.min(roiStartPoint.y, constrainedEndY) / rect.height * thermalStream.naturalHeight;
+              const x2 = Math.max(roiStartPoint.x, constrainedEndX) / rect.width * thermalStream.naturalWidth;
+              const y2 = Math.max(roiStartPoint.y, constrainedEndY) / rect.height * thermalStream.naturalHeight;
+
+              // Only create ROI if it has meaningful size
+              if (Math.abs(x2 - x1) > 10 && Math.abs(y2 - y1) > 10) {
+                  roiBox = {
+                      x1: Math.round(x1),
+                      y1: Math.round(y1),
+                      x2: Math.round(x2),
+                      y2: Math.round(y2)
+                  };
+
+                  // Send to backend
+                  fetch('/api/thermal/set_roi', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(roiBox)
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          showMessage(`ROI set: (${roiBox.x1}, ${roiBox.y1}) to (${roiBox.x2}, ${roiBox.y2})`, 'success');
+                          // Reset drawing mode but keep ROI active
+                          roiMode = false;
+                          isDrawingRoi = false;
+                          drawRoiBtn.style.background = '';
+                          drawRoiBtn.textContent = '🔲 Draw Bounding Box';
+                          drawRoiBtn.classList.remove('active');
+                          thermalStream.style.cursor = 'default';
+                      } else {
+                          showMessage(`Error setting ROI: ${data.error}`, 'error');
+                          clearROI();
+                      }
+                  })
+                  .catch(error => {
+                      showMessage(`Error setting ROI: ${error.message}`, 'error');
+                      clearROI();
+                  });
+              } else {
+                  // ROI too small, clear it
+                  clearROI();
+                  showMessage('ROI too small, please draw a larger area', 'warning');
+              }
+
+              isDrawingRoi = false;
+              roiStartPoint = null;
+              event.preventDefault();
+          });
+      }
+
+      // Change thermal colormap
+      function changeThermalColormap(colormap) {
+          fetch(`/api/thermal/colormap/${colormap}`)
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      showMessage(`Colormap changed to ${colormap}`, 'success');
+                      // Update active colormap button
+                      document.querySelectorAll('.colormap-btn').forEach(btn => {
+                          btn.classList.remove('active');
+                      });
+                      event.target.classList.add('active');
+                  } else {
+                      showMessage(`Error changing colormap: ${data.error}`, 'error');
+                  }
+              })
+              .catch(error => {
+                  showMessage(`Error changing colormap: ${error.message}`, 'error');
+              });
+      }
+
+      // Update thermal camera UI
+      function updateThermalUI() {
+          if (thermalCameraRunning) {
+              startThermalBtn.disabled = true;
+              stopThermalBtn.disabled = false;
+              thermalStream.style.display = 'block';
+              thermalPlaceholder.style.display = 'none';
+              thermalStatus.textContent = 'Status: Running';
+          } else {
+              startThermalBtn.disabled = false;
+              stopThermalBtn.disabled = true;
+              thermalStream.style.display = 'none';
+              thermalPlaceholder.style.display = 'block';
+              thermalStatus.textContent = 'Status: Stopped';
+          }
+      }
+
+      // Update temperature readings
+      function updateTemperatureReadings() {
+          fetch('/api/thermal/temperature')
+              .then(response => response.json())
+              .then(data => {
+                  if (!data.error) {
+                      document.getElementById('thermal-min-temp').textContent = `${data.min_temperature.toFixed(1)}°C`;
+                      document.getElementById('thermal-max-temp').textContent = `${data.max_temperature.toFixed(1)}°C`;
+                      document.getElementById('thermal-avg-temp').textContent = `${data.avg_temperature.toFixed(1)}°C`;
+                  }
+              })
+              .catch(error => {
+                  console.error('Error fetching temperature readings:', error);
+              });
+      }
+
+      // Thermal status update interval
+      let thermalUpdateInterval;
+
+      function startThermalStatusUpdates() {
+          updateTemperatureReadings();
+          thermalUpdateInterval = setInterval(updateTemperatureReadings, 2000); // Update every 2 seconds
+      }
+
+      function stopThermalStatusUpdates() {
+          if (thermalUpdateInterval) {
+              clearInterval(thermalUpdateInterval);
+          }
+          // Reset temperature readings
+          document.getElementById('thermal-min-temp').textContent = '--°C';
+          document.getElementById('thermal-max-temp').textContent = '--°C';
+          document.getElementById('thermal-avg-temp').textContent = '--°C';
+      }
+
+      // Check thermal camera status on page load
+      fetch('/api/thermal/status')
+          .then(response => response.json())
+          .then(data => {
+              thermalCameraRunning = data.running || false;
+              updateThermalUI();
+              if (thermalCameraRunning) {
+                  startThermalStatusUpdates();
+              }
+          })
+          .catch(error => {
+              console.error('Error checking thermal camera status:', error);
+          });
+    </script>
+
+    <!-- Configuration Modal -->
+    <div id="configModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Configure DryBox Parameters</h2>
+        </div>
+        <div class="modal-body">
+          <div class="config-tabs">
+            <button class="tab-button active" onclick="showTab('layers')">
+              Shell Layers
+            </button>
+            <button class="tab-button" onclick="showTab('idle')">
+              Idle State
+            </button>
+          </div>
+
+          <!-- Shell Layers Configuration -->
+          <div id="layersTab" class="tab-content active">
+            <div class="config-section">
+              <h3>Shell Layer Configuration</h3>
+              <div id="layersList">
+                <!-- Layers will be dynamically loaded here -->
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="addLayer()"
+              >
+                Add Layer
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="removeLayer()"
+              >
+                Remove Last Layer
+              </button>
+            </div>
+          </div>
+
+          <!-- Idle State Configuration -->
+          <div id="idleTab" class="tab-content">
+            <div class="config-section">
+              <h3>Idle State Parameters</h3>
+              <p class="config-description">
+                Configure the parameters that will be maintained after all shell
+                layers complete.
+              </p>
+
+              <div class="config-row">
+                <label for="idleAmbientTemp">Ambient Temperature (°C):</label>
+                <input
+                  type="number"
+                  id="idleAmbientTemp"
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  value="26"
+                />
+              </div>
+
+              <div class="config-row">
+                <label for="idleShellTemp">Shell Temperature (°C):</label>
+                <input
+                  type="number"
+                  id="idleShellTemp"
+                  step="0.1"
+                  min="0"
+                  max="200"
+                  value="0"
+                />
+              </div>
+
+              <div class="config-row">
+                <label for="idleHumidity">Humidity (%):</label>
+                <input
+                  type="number"
+                  id="idleHumidity"
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  value="0"
+                />
+              </div>
+
+              <div class="config-row">
+                <label for="idleShellSpeed">Shell Speed (RPM):</label>
+                <input
+                  type="number"
+                  id="idleShellSpeed"
+                  step="1"
+                  min="0"
+                  max="10000"
+                  value="0"
+                />
+              </div>
+
+              <div class="config-row">
+                <label for="idleFanSpeed">Fan Speed (CFM):</label>
+                <input
+                  type="number"
+                  id="idleFanSpeed"
+                  step="1"
+                  min="0"
+                  max="1000"
+                  value="0"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="closeModal()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="saveConfigAndStart()"
+          >
+            Save & Start DryBox
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

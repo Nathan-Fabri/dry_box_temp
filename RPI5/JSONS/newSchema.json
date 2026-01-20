@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Shell Layer Properties",
+  "type": "object",
+  "properties": {
+    "shell_layer": {
+      "type": "array",
+      "description": "List of shell layers and their time-dependent parameters",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the shell layer"
+          },
+          "ambient_temperature": {
+            "type": "array",
+            "description": "Ambient temperature over time in Kelvin",
+            "items": { "type": "number" }
+          },
+          "shell_temperature": {
+            "type": "array",
+            "description": "Shell temperature over time in Kelvin",
+            "items": { "type": "number" }
+          },
+          "humidity": {
+            "type": "array",
+            "description": "Humidity over time in % RH",
+            "items": { "type": "number" }
+          },
+          "time": {
+            "type": "array",
+            "description": "Timestamps in minutes",
+            "items": { "type": "number" }
+          },
+          "shell_speed": {
+            "type": "array",
+            "description": "Shell rotation speed (e.g., RPM) over time",
+            "items": { "type": "number" }
+          },
+          "fan_speed": {
+            "type": "array",
+            "description": "Fan speed over time for tower fans (CFM)",
+            "items": { "type": "number" }
+          },
+            "Ki": {
+                "type": "number",
+                "description": "Integral gain for PID control",
+                "items": { "type": "number" }
+            },
+            "Kp": {
+                "type": "number",
+                "description": "Proportional gain for PID control",
+                "items": { "type": "number" }
+            },
+            "Kd": {
+                "type": "number",
+                "description": "Derivative gain for PID control",
+                "items": { "type": "number" }
+            }
+        },
+        "required": [
+          "name",
+          "ambient_temperature",
+          "shell_temperature",
+          "humidity",
+          "time",
+          "shell_speed",
+          "fan_speed",
+          "Ki",
+          "Kp",
+          "Kd"
+        ]
+      }
+    }
+  },
+  "required": [ "shell_layer" ]
+}
