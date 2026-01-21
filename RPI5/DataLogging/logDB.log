@@ -1,0 +1,313 @@
+2026-01-21 11:31:02,506 [INFO] LogDB starting...
+2026-01-21 11:31:02,506 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 11:31:02,506 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 11:31:02,506 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 11:31:02,506 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 11:31:02,506 [INFO] Starting from position 0
+2026-01-21 11:31:02,506 [INFO] Using 1000.0ms check interval
+2026-01-21 11:37:08,621 [INFO] LogDB starting...
+2026-01-21 11:37:08,621 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 11:37:08,623 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 11:37:08,623 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 11:37:08,623 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 11:37:08,623 [INFO] Starting from position 0
+2026-01-21 11:37:08,623 [INFO] Using 1000.0ms check interval
+2026-01-21 11:57:13,952 [INFO] LogDB starting...
+2026-01-21 11:57:13,952 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 11:57:13,952 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 11:57:13,952 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 11:57:13,962 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 11:57:13,962 [INFO] Starting from position 648
+2026-01-21 11:57:13,962 [INFO] Using 1000.0ms check interval
+2026-01-21 12:08:45,390 [INFO] LogDB starting...
+2026-01-21 12:08:45,390 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 12:08:45,390 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 12:08:45,390 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 12:08:45,390 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 12:08:45,390 [INFO] Starting from position 648
+2026-01-21 12:08:45,393 [INFO] Using 1000.0ms check interval
+2026-01-21 12:08:45,476 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:08:45,560 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:08:45,644 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:08:45,711 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:08:45,763 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:08:45,815 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:10:17,034 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:10:17,086 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:10:17,161 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:10:17,224 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:10:17,276 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:10:17,339 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:10:17,399 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:10:17,466 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:12:30,002 [INFO] LogDB starting...
+2026-01-21 12:12:30,002 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 12:12:30,002 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 12:12:30,002 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 12:12:30,002 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 12:12:30,002 [INFO] Starting from position 1325
+2026-01-21 12:12:30,002 [INFO] Using 1000.0ms check interval
+2026-01-21 12:12:30,086 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:12:30,148 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:12:30,200 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:12:30,252 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:12:30,305 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:12:30,367 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:12:30,419 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:12:30,471 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:12:30,514 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:24:23,083 [INFO] LogDB starting...
+2026-01-21 12:24:23,083 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 12:24:23,083 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 12:24:23,083 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 12:24:23,083 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 12:24:23,086 [INFO] Starting from position 2139
+2026-01-21 12:24:23,086 [INFO] Using 1000.0ms check interval
+2026-01-21 12:24:23,152 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,199 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,249 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,299 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,352 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,399 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,449 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,490 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,559 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,601 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,640 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,682 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,723 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,767 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,805 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,867 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,910 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,953 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:23,989 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,027 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,083 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,117 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,184 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,227 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,271 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,317 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,371 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,411 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,468 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,534 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,576 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,617 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,652 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,696 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,750 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,800 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,849 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,899 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,940 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:24,982 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,016 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,065 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,116 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,165 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,216 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,252 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,296 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,349 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,399 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,449 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,499 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,549 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,599 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,639 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,683 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,732 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,775 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,840 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,875 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,916 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:25,958 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:26,015 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:26,066 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:26,116 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:26,152 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:26,190 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:26,232 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:24:26,282 [ERROR] Failed DB insert from XIAOESP32: the query contains more than one '%s' placeholder
+2026-01-21 12:28:57,708 [INFO] LogDB starting...
+2026-01-21 12:28:57,715 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 12:28:57,716 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 12:28:57,716 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 12:28:57,716 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 12:28:57,716 [INFO] Starting from position 8073
+2026-01-21 12:28:57,716 [INFO] Using 1000.0ms check interval
+2026-01-21 12:28:58,099 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:28:58,166 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:28:58,215 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:28:58,272 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:28:58,343 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:28:58,415 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:32:11,113 [INFO] LogDB starting...
+2026-01-21 12:32:11,113 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 12:32:11,114 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 12:32:11,114 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 12:32:11,114 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 12:32:11,115 [INFO] Starting from position 8559
+2026-01-21 12:32:11,115 [INFO] Using 1000.0ms check interval
+2026-01-21 12:32:11,174 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:32:11,247 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:32:11,315 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:32:11,369 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:32:11,499 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:34:50,464 [INFO] LogDB starting...
+2026-01-21 12:34:50,464 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 12:34:50,465 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 12:34:50,465 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 12:34:50,465 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 12:34:50,465 [INFO] Starting from position 8980
+2026-01-21 12:34:50,465 [INFO] Using 1000.0ms check interval
+2026-01-21 12:34:50,540 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:34:50,617 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:34:50,680 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:34:50,733 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:34:50,791 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:34:50,849 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:34:50,908 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:34:50,974 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:34:51,048 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:34:51,118 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:53,793 [INFO] LogDB starting...
+2026-01-21 12:36:53,793 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 12:36:53,793 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 12:36:53,793 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 12:36:53,793 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 12:36:53,797 [INFO] Starting from position 9888
+2026-01-21 12:36:53,797 [INFO] Using 1000.0ms check interval
+2026-01-21 12:36:53,866 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:53,947 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:53,998 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:54,049 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:54,101 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:54,166 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:54,232 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:54,307 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:54,366 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:54,440 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:54,495 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:54,546 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:36:54,614 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:54,480 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:54,533 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:54,591 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:54,654 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:54,716 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:54,782 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:54,840 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:54,905 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:54,983 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:55,037 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:55,090 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:55,140 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:55,190 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:55,263 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:55,340 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:55,405 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:55,462 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:55,515 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 12:44:57,816 [INFO] LogDB starting...
+2026-01-21 12:44:57,816 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 12:44:57,816 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 12:44:57,816 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 12:44:57,816 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 12:44:57,816 [INFO] Starting from position 12173
+2026-01-21 12:44:57,816 [INFO] Using 1000.0ms check interval
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,816 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,827 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,827 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,827 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,827 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,827 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,827 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,827 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,827 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,827 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,827 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,828 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,828 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,828 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 12:44:57,828 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:21:43,943 [INFO] LogDB starting...
+2026-01-21 14:21:43,943 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 14:21:43,943 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 14:21:43,943 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 14:21:43,943 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 14:21:43,943 [INFO] Starting from position 14927
+2026-01-21 14:21:43,943 [INFO] Using 1000.0ms check interval
+2026-01-21 14:21:43,954 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:21:43,954 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:21:43,954 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:21:43,954 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:21:43,954 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:21:43,954 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:21:43,954 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:23:00,748 [INFO] LogDB starting...
+2026-01-21 14:23:00,748 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 14:23:00,748 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 14:23:00,748 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 14:23:00,748 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 14:23:00,748 [INFO] Starting from position 15494
+2026-01-21 14:23:00,748 [INFO] Using 1000.0ms check interval
+2026-01-21 14:49:47,160 [INFO] LogDB starting...
+2026-01-21 14:49:47,160 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 14:49:47,163 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 14:49:47,163 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 14:49:47,163 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 14:49:47,163 [INFO] Starting from position 15494
+2026-01-21 14:49:47,163 [INFO] Using 1000.0ms check interval
+2026-01-21 14:49:47,163 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:49:57,181 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:50:07,197 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:50:17,216 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:50:27,230 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:50:37,249 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:50:47,275 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:50:57,297 [ERROR] Error processing log line: cannot access local variable 'cur' where it is not associated with a value
+2026-01-21 14:58:49,640 [INFO] LogDB starting...
+2026-01-21 14:58:49,640 [INFO] Loaded .env from: C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\.env
+2026-01-21 14:58:49,640 [INFO] Loaded configuration from C:\Users\nathan\Desktop\Controls_Code\src\controls\drybox\RPI5\JSONS\configLogDB.json
+2026-01-21 14:58:49,640 [INFO] Monitoring: C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log
+2026-01-21 14:58:49,640 [INFO] LogDB running. Press Ctrl+C to exit.
+2026-01-21 14:58:49,640 [INFO] Starting from position 16142
+2026-01-21 14:58:49,640 [INFO] Using 1000.0ms check interval
+2026-01-21 14:58:49,716 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 14:58:49,783 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 14:58:49,840 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 14:58:49,901 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 14:59:00,007 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 14:59:10,094 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 14:59:30,218 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 14:59:40,314 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 14:59:50,403 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 15:00:00,496 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 15:00:10,583 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 15:00:19,668 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 15:00:29,745 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 15:00:39,853 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 15:00:49,941 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.
+2026-01-21 15:01:00,024 [INFO] Inserted 2 values from XIAOESP32 to TimescaleDB.

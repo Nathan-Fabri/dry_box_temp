@@ -1,0 +1,16 @@
+[Unit]
+Description=DryBox Web Control Interface
+After=network.target
+
+[Service]
+Type=exec
+User=FBR-PI
+ExecStart=/home/FBR-PI/software/controls/drybox/RPI5/Scripts/service_wrapper.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=drybox-web-control
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,22 @@
+{
+  "serial_ports": [
+    {
+      "port": "/dev/serial/by-id/usb-Teensyduino_Triple_Serial_13143020-if04",
+      "baud_rate": 115200,
+      "name": "TeensyHVAC"
+    },
+    {
+      "port": "/dev/serial/by-id/usb-Teensyduino_Triple_Serial_13142880-if04",
+      "baud_rate": 115200,
+      "name": "TeensyRight"
+    },
+    {
+      "port": "/dev/serial/by-id/usb-Teensyduino_Triple_Serial_13142960-if04",
+      "baud_rate": 115200,
+      "name": "TeensyLeft"
+    }
+  ],
+  "output_dir": "DataLogging",
+  "log_interval_ms": 1,
+  "debug": true
+}
