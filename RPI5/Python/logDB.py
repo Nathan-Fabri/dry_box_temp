@@ -106,30 +106,51 @@ def save_last_position(log_path, position):
         logging.error(f"Error saving position: {e}")
 
 # ...existing parser functions remain the same...
+def parse_infrared_sensor_data(message):
+    """Parse infrared sensor data"""
+    infrared_pattern = r'✅ (Left|Right) Tower Infrared Sensor \| Object Temp: ([\d.]+) °C \| Ambient Temp: ([\d.]+) °C'
+    infrared_match = re.match(infrared_pattern, message)
+    
+    if not infrared_match:
+        return None
+    
+    tower_side = infrared_match.group(1)
+    object_temp = float(infrared_match.group(2))
+    ambient_temp = float(infrared_match.group(3))
+    
+    timestamp = datetime.now(timezone.utc).isoformat()
+    
+    return {
+        'timestamp': timestamp,
+        'sensors': [
+            {'name': f"{tower_side}Tower_Object_Temp", 'value': object_temp},
+            {'name': f"{tower_side}Tower_Ambient_Temp", 'value': ambient_temp}
+        ]
+    }
 
-# def parse_temp_humidity_sensor_data(message):
-#     pattern = (
-#         r'✅\s*env_chamber\s*\|\s*'
-#         r'temperature:\s*([\d.]+)\s*°C\s*\|\s*'
-#         r'humidity:\s*([\d.]+)\s*%RH'
-#     )
+def parse_temp_humidity_sensor_data(message):
+    pattern = (
+        r'✅\s*env_chamber\s*\|\s*'
+        r'temperature:\s*([\d.]+)\s*°C\s*\|\s*'
+        r'humidity:\s*([\d.]+)\s*%RH'
+    )
 
-#     match = re.search(pattern, message, re.IGNORECASE)
-#     if not match:
-#         return None
+    match = re.search(pattern, message, re.IGNORECASE)
+    if not match:
+        return None
 
-#     temperature = float(match.group(1))
-#     humidity = float(match.group(2))
+    temperature = float(match.group(1))
+    humidity = float(match.group(2))
 
-#     timestamp = datetime.now(timezone.utc).isoformat()
+    timestamp = datetime.now(timezone.utc).isoformat()
 
-#     return {
-#         'timestamp': timestamp,
-#         'sensors': [
-#             {'name': 'env_chamber_temperature', 'value': temperature},
-#             {'name': 'env_chamber_humidity', 'value': humidity}
-#         ]
-#     }
+    return {
+        'timestamp': timestamp,
+        'sensors': [
+            {'name': 'env_chamber_temperature', 'value': temperature},
+            {'name': 'env_chamber_humidity', 'value': humidity}
+        ]
+    }
 
 def parse_temp_humidity_sensor_data(message):
     pattern = (
@@ -156,27 +177,49 @@ def parse_temp_humidity_sensor_data(message):
     }
 
 
-# def parse_temp_humidity_sensor_data(message):
-#     """Parse temperature/humidity sensor data"""
-#     temp_hum_pattern = r'✅ (\w+(?:_\w+)*) \| Temp: ([\d.]+) °C \| Hum: ([\d.]+) %RH'
-#     temp_hum_match = re.match(temp_hum_pattern, message)
+def parse_load_cell_sensor_data(message):
+    """Parse load cell sensor data"""
+    load_cell_pattern = r'✅ Load_Cell \| Voltage: ([\d.]+) V \| Weight: ([\d.]+) lb'
+    load_cell_match = re.match(load_cell_pattern, message)
     
-#     if not temp_hum_match:
-#         return None
+    if not load_cell_match:
+        return None
     
-#     sensor_base_name = temp_hum_match.group(1)
-#     temperature = float(temp_hum_match.group(2))
-#     humidity = float(temp_hum_match.group(3))
+    voltage = float(load_cell_match.group(1))
+    weight = float(load_cell_match.group(2))
     
-#     timestamp = datetime.now(timezone.utc).isoformat()
+    timestamp = datetime.now(timezone.utc).isoformat()
     
-#     return {
-#         'timestamp': timestamp,
-#         'sensors': [
-#             {'name': f"{sensor_base_name}_Temp", 'value': temperature},
-#             {'name': f"{sensor_base_name}_Hum", 'value': humidity}
-#         ]
-#     }
+    return {
+        'timestamp': timestamp,
+        'sensors': [
+            {'name': 'LoadCell_Voltage', 'value': voltage},
+            {'name': 'LoadCell_Weight', 'value': weight}
+        ]
+    }
+
+def parse_rtd_data(message):
+    """Parse RTD temperature data for multiple channels on one line"""
+    # Regex to find all occurrences of "Channel X: Y.YY C"
+    rtd_pattern = r'Channel ([\d]+): ([\d.-]+) C'
+    matches = re.findall(rtd_pattern, message)
+
+    if not matches:
+        return None
+    
+    timestamp = datetime.now(timezone.utc).isoformat()
+    sensor_list = []
+
+    for channel_num, temp_value in matches:
+        sensor_list.append({
+            'name': f"RTD_CH{channel_num}_Temp", 
+            'value': float(temp_value)
+        })
+
+    return {
+        'timestamp': timestamp,
+        'sensors': sensor_list
+    }
 
 
 def parse_sensor_data_vector(message):
@@ -184,9 +227,11 @@ def parse_sensor_data_vector(message):
     if not message.startswith('✅'):
         return None
     
-    parsed_data = parse_temp_humidity_sensor_data(message)
+    for parser in [parse_infrared_sensor_data, parse_rtd_data, parse_temp_humidity_sensor_data, parse_load_cell_sensor_data]:
+                parsed_data = parser(message)
     if parsed_data:
         return parsed_data
+
     return None
 
 # def insert_vector_to_timescaledb(parsed_data, device_name):
@@ -200,7 +245,7 @@ def parse_sensor_data_vector(message):
 #     for entry in parsed_data['sensors']:
 #         sensor_id = entry["name"]
 #         value = entry["value"]
-#         records.append((timestamp, sensor_id, value))
+#       s.append((timestamp, sensor_id, value))
 
 #     if not records:
 #         return

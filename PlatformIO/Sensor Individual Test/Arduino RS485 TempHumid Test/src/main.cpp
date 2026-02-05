@@ -1,85 +1,66 @@
-/*
-  This code demonstrates how to interact with an Arduino Mega 2560 and
-  a Modbus RTU temperature and humidity sensor (SHT20). It reads the
-  temperature and humidity values every 1 seconds and display data to
-  the serial monitor.
-
-  Note: Serial Port 0 is not used to connect the RS485 Converter (MAX485)
-  because its used for debugging. The Serial Port 1 (TX1, RX1) is used
-  for ModBus communication interface.
-
-  Wiring of Sensor, Arduino, and MAX485 TTL to RS485 Converter:
-  ___________________________________________________________________________________________
-  | Sensor (SHT20)   |   MAX485 TTL to RS485 Converter
-  |  A (Yellow)      |        A (Terminal block)
-  |  B (White)       |        B (Terminal block)
-  |  GND (Black)     |       GND (External Supply)
-  |  Vs (Red)        |      9-30V (External Supply)
-  ___________________________________________________________________________________________
-  | MAX485 TTL to RS485 Converter  |  Arduino (Hardware Serial)  |  Arduino (Software Serial)
-  |     RO (Reciever Output)       |        D19 (RX1)            |          D9 (RX)
-  |     RE (Reciever Enable)       |        D2                   |          D2
-  |     DE (Driver Enable)         |        D3                   |          D3
-  |     DI (Driver Input)          |        D18 (TX1)            |          D10 (TX)
-  ___________________________________________________________________________________________
-*/
-
-// MAX485 Pin | Connected To
-// RO | D9 (RX)
-// DI | D10 (TX)
-// RE | D2
-// DE | D3
-// VCC | 5V
-// GND | GND
-
 #include <ModbusMaster.h>
-#include <SoftwareSerial.h>
 
-#define MAX485_RE_NEG  2
-#define MAX485_DE      3
-#define SSERIAL_RX_PIN 9
-#define SSERIAL_TX_PIN 10
+// Waveshare ESP32-S3-Relay-6CH RS485 Pins
+#define RS485_RX 18
+#define RS485_TX 17
 
-SoftwareSerial RS485Serial(SSERIAL_RX_PIN, SSERIAL_TX_PIN);
+uint16_t adds[] = {0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0004, 0x0005, 0x0006, 0x0007, 0x0008, 0x0009};
+uint8_t idsToTest[] = {1, 0, 2, 3}; // Testing ID 1, Broadcast 0, and common backups
+
 ModbusMaster node;
 
-void preTransmission() {
-  digitalWrite(MAX485_RE_NEG, HIGH);
-  digitalWrite(MAX485_DE, HIGH);
-}
-
-void postTransmission() {
-  digitalWrite(MAX485_RE_NEG, LOW);
-  digitalWrite(MAX485_DE, LOW);
-}
+// We use the built-in Hardware Serial1
+// Note: We do NOT need "SoftwareSerial RS485Serial" anymore.
 
 void setup() {
-  pinMode(MAX485_RE_NEG, OUTPUT);
-  pinMode(MAX485_DE, OUTPUT);
-  digitalWrite(MAX485_RE_NEG, LOW);
-  digitalWrite(MAX485_DE, LOW);
+  Serial.begin(9600); // PC Debugging
+  
+  // Initialize Hardware Serial 1 with the Waveshare pins
+  Serial1.begin(9600, SERIAL_8N1, RS485_RX, RS485_TX);
 
-  Serial.begin(9600);
-  RS485Serial.begin(9600);
-
-  node.begin(1, RS485Serial);
-  node.preTransmission(preTransmission);
-  node.postTransmission(postTransmission);
+  // Tell ModbusMaster to use Serial1
+  node.begin(1, Serial1);
+  
+  Serial.println("System Initialized. Probing sensor...");
 }
 
 void loop() {
-  uint8_t result = node.readInputRegisters(0x0001, 2);
-  Serial.println("Data Requested");
+  // Test ID 1 (Standard) and ID 0 (Broadcast)
+  uint8_t idsToTest[] = {1, 0};
 
-  if (result == node.ku8MBSuccess) {
-    Serial.print("Temperature: ");
-    Serial.print(node.getResponseBuffer(0) / 10.0);
-    Serial.print("   Humidity: ");
-    Serial.println(node.getResponseBuffer(1) / 10.0);
-  } else {
-    Serial.print("Modbus Error: ");
-    Serial.println(result);
+  for (int idIdx = 0; idIdx < 2; idIdx++) {
+    uint8_t currentID = idsToTest[idIdx];
+    node.begin(currentID, Serial1);
+    
+    Serial.print("--- Testing ID: ");
+    Serial.println(currentID);
+
+    for (int i = 0; i <= 9; i++) {
+      uint16_t currentReg = adds[i];
+      
+      // Try Read Input Register (0x04)
+      uint8_t result = node.readHoldingRegisters(currentReg, 2);
+      
+      Serial.print("Testing Reg 0x");
+      Serial.print(currentReg, HEX);
+      Serial.print(": ");
+
+      if (result == node.ku8MBSuccess) {
+        Serial.println("SUCCESS!");
+        Serial.print("Temp: ");
+        Serial.print(node.getResponseBuffer(0) / 10.0);
+        Serial.print(" | Hum: ");
+        Serial.println(node.getResponseBuffer(1) / 10.0);
+        
+        while(1); // Stop scanning once we find it
+      } else {
+        Serial.print("Error ");
+        Serial.println(result);
+      }
+      delay(200); // Short delay between registers
+    }
   }
-
-  delay(1000);
+  
+  Serial.println("Scan finished. Waiting 5 seconds...");
+  delay(5000);
 }
