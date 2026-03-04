@@ -130,49 +130,26 @@ def parse_infrared_sensor_data(message):
 
 def parse_temp_humidity_sensor_data(message):
     pattern = (
-        r'✅\s*env_chamber\s*\|\s*'
-        r'temperature:\s*([\d.]+)\s*°C\s*\|\s*'
-        r'humidity:\s*([\d.]+)\s*%RH'
+        r'✅ Sensor_([0-9]+): '
+        r'temperature: ([\d.]+) °C \| '
+        r'humidity: ([\d.]+) %RH'
     )
 
     match = re.search(pattern, message, re.IGNORECASE)
     if not match:
         return None
 
-    temperature = float(match.group(1))
-    humidity = float(match.group(2))
+    sensor_id_num = match.group(1)
+    temperature = float(match.group(2))
+    humidity = float(match.group(3))
 
     timestamp = datetime.now(timezone.utc).isoformat()
 
     return {
         'timestamp': timestamp,
         'sensors': [
-            {'name': 'env_chamber_temperature', 'value': temperature},
-            {'name': 'env_chamber_humidity', 'value': humidity}
-        ]
-    }
-
-def parse_temp_humidity_sensor_data(message):
-    pattern = (
-        r'✅ env_chamber \| '
-        r'temperature: ([\d.]+) °C \| '
-        r'humidity: ([\d.]+) %RH'
-    )
-
-    match = re.match(pattern, message, re.IGNORECASE)
-    if not match:
-        return None
-
-    temperature = float(match.group(1))
-    humidity = float(match.group(2))
-
-    timestamp = datetime.now(timezone.utc).isoformat()
-
-    return {
-        'timestamp': timestamp,
-        'sensors': [
-            {'name': 'env_chamber_temperature', 'value': temperature},
-            {'name': 'env_chamber_humidity', 'value': humidity}
+            {'name': f'Sensor_{sensor_id_num}_Temp', 'value': temperature},
+            {'name': f'Sensor_{sensor_id_num}_Hum', 'value': humidity}
         ]
     }
 
@@ -228,9 +205,9 @@ def parse_sensor_data_vector(message):
         return None
     
     for parser in [parse_infrared_sensor_data, parse_rtd_data, parse_temp_humidity_sensor_data, parse_load_cell_sensor_data]:
-                parsed_data = parser(message)
-    if parsed_data:
-        return parsed_data
+        parsed_data = parser(message)
+        if parsed_data:
+            return parsed_data
 
     return None
 

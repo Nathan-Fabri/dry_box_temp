@@ -1,5 +1,5 @@
 {
-    "sensor_log_path": "C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log",
+    "sensor_log_path": "/home/fabriusa/dry_box_temp/DataLogging/serialDebug.log",
     "log_interval_ms": 1000,
     "debug": true,
     "database": {

@@ -1,8 +1,8 @@
 import serial
 
-PORT = "COM5"
+PORT = "/dev/ttyACM0"
 BAUD = 115200
-LOG_FILE = r"C:/Users/nathan/Desktop/Controls_Code/src/controls/drybox/DataLogging/serialDebug.log"
+LOG_FILE = r"/home/fabriusa/dry_box_temp/DataLogging/serialDebug.log"
 
 ser = serial.Serial(PORT, BAUD, timeout=1)
 
