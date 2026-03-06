@@ -174,6 +174,63 @@ def parse_load_cell_sensor_data(message):
             {'name': 'LoadCell_Weight', 'value': weight}
         ]
     }
+    
+def parse_heater_percent_data(message):
+    """Parse heater percentage data"""
+    heater_pattern = r'✅ Heater_Percent: ([\d.]+) %'
+    heater_match = re.match(heater_pattern, message)
+    
+    if not heater_match:
+        return None
+    
+    heater_percent = float(heater_match.group(1))
+    
+    timestamp = datetime.now(timezone.utc).isoformat()
+    
+    return {
+        'timestamp': timestamp,
+        'sensors': [
+            {'name': 'Heater_Percent', 'value': heater_percent}
+        ]
+    }
+
+def parse_humidity_percent_data(message):
+    """Parse humidity percentage data"""
+    dehumidifier_pattern = r'✅ Dehumidifier_Percent: ([\d.]+) %RH'
+    dehumidifier_match = re.match(dehumidifier_pattern, message)
+    
+    if not dehumidifier_match:
+        return None
+    
+    dehumidifier_percent = float(dehumidifier_match.group(1))
+    
+    timestamp = datetime.now(timezone.utc).isoformat()
+    
+    return {
+        'timestamp': timestamp,
+        'sensors': [
+            {'name': 'Dehumidifier_Percent', 'value': dehumidifier_percent}
+        ]
+    }
+
+def fan_status_data(message):
+    """Parse fan status data"""
+    fan_pattern = r'✅ Fan_([0-9]+): 0|1'
+    fan_match = re.match(fan_pattern, message)
+    
+    if not fan_match:
+        return None
+    
+    fan_status = 1 if fan_match.group(1) == 'ON' else 0
+    
+    timestamp = datetime.now(timezone.utc).isoformat()
+    
+    return {
+        'timestamp': timestamp,
+        'sensors': [
+            {'name': 'Fan_Status', 'value': fan_status}
+        ]
+    }
 
 def parse_rtd_data(message):
     """Parse RTD temperature data for multiple channels on one line"""
@@ -204,7 +261,7 @@ def parse_sensor_data_vector(message):
     if not message.startswith('✅'):
         return None
     
-    for parser in [parse_infrared_sensor_data, parse_rtd_data, parse_temp_humidity_sensor_data, parse_load_cell_sensor_data]:
+    for parser in [parse_infrared_sensor_data, parse_rtd_data, parse_temp_humidity_sensor_data, parse_load_cell_sensor_data, parse_humidity_percent_data]:
         parsed_data = parser(message)
         if parsed_data:
             return parsed_data
