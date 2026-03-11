@@ -215,7 +215,7 @@ def parse_humidity_percent_data(message):
 
 def fan_status_data(message):
     """Parse fan status data"""
-    fan_pattern = r'✅ Fan_([0-9]+): ([01])'
+    fan_pattern = r'✅ Fan_([0-9]+): ([-9]+)'
     fan_match = re.match(fan_pattern, message)
     
     if not fan_match:
