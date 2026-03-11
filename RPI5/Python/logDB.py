@@ -153,7 +153,6 @@ def parse_temp_humidity_sensor_data(message):
         ]
     }
 
-
 def parse_load_cell_sensor_data(message):
     """Parse load cell sensor data"""
     load_cell_pattern = r'✅ Load_Cell \| Voltage: ([\d.]+) V \| Weight: ([\d.]+) lb'
@@ -210,6 +209,25 @@ def parse_humidity_percent_data(message):
         'timestamp': timestamp,
         'sensors': [
             {'name': 'Dehumidifier_Percent', 'value': dehumidifier_percent}
+        ]
+    }
+    
+def parse_pid_data(message):
+    pid_pattern = r'✅ PID_(\w+):' r'([\d.]+)'    
+    match = re.search(pid_pattern, message)
+
+    if not pid_pattern:
+        return None
+    
+    pid_letter = match.group(1)
+    pid_val = float(match.group(2))
+
+    timestamp = datetime.now(timezone.utc).isoformat()
+
+    return {
+        'timestamp': timestamp,
+        'sensors': [
+            {'name': f'Sensor_{pid_letter}_Temp', 'value': pid_val},
         ]
     }
 
