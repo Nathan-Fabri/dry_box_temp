@@ -279,7 +279,7 @@ def parse_sensor_data_vector(message):
     if not message.startswith('✅'):
         return None
     
-    for parser in [parse_infrared_sensor_data, parse_rtd_data, parse_temp_humidity_sensor_data, parse_load_cell_sensor_data, parse_humidity_percent_data, parse_heater_percent_data, fan_status_data]:
+    for parser in [parse_infrared_sensor_data, parse_rtd_data, parse_temp_humidity_sensor_data, parse_load_cell_sensor_data, parse_humidity_percent_data, parse_heater_percent_data, fan_status_data, parse_pid_data]:
         parsed_data = parser(message)
         if parsed_data:
             return parsed_data
