@@ -212,6 +212,25 @@ def parse_humidity_percent_data(message):
         ]
     }
     
+# absolute humidity
+def parse_ah_data(message):
+    """Parse humidity percentage data"""
+    AH_pattern = r'✅ AH: ([\d.]+) %RH'
+    AH_match = re.match(AH_pattern, message)
+
+    if not AH_match:
+        return None
+
+    AH_percent = float(AH_match.group(1))
+
+    timestamp = datetime.now(timezone.utc).isoformat()
+
+    return {
+        'timestamp': timestamp,
+        'sensors': [
+            {'name': 'AH', 'value': AH_percent}
+        ]
+}
 def parse_pid_data(message):
     pid_pattern = r'✅ PID_([PID]):\s*([\d.-]+)'    
     match = re.search(pid_pattern, message)
@@ -279,7 +298,9 @@ def parse_sensor_data_vector(message):
     if not message.startswith('✅'):
         return None
     
-    for parser in [parse_infrared_sensor_data, parse_rtd_data, parse_temp_humidity_sensor_data, parse_load_cell_sensor_data, parse_humidity_percent_data, parse_heater_percent_data, fan_status_data, parse_pid_data]:
+    for parser in [parse_infrared_sensor_data, parse_rtd_data, parse_temp_humidity_sensor_data, 
+                   parse_load_cell_sensor_data, parse_humidity_percent_data, parse_heater_percent_data, 
+                   fan_status_data, parse_pid_data, parse_ah_data]:
         parsed_data = parser(message)
         if parsed_data:
             return parsed_data
