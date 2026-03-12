@@ -213,10 +213,10 @@ def parse_humidity_percent_data(message):
     }
     
 def parse_pid_data(message):
-    pid_pattern = r'✅ PID_(\w+):' r'([\d.]+)'    
+    pid_pattern = r'✅ PID_([PID]):\s*([\d.-]+)'    
     match = re.search(pid_pattern, message)
 
-    if not pid_pattern:
+    if not match:
         return None
     
     pid_letter = match.group(1)
@@ -227,7 +227,7 @@ def parse_pid_data(message):
     return {
         'timestamp': timestamp,
         'sensors': [
-            {'name': f'Sensor_{pid_letter}_Temp', 'value': pid_val},
+            {'name': f'PID_{pid_letter}', 'value': pid_val},
         ]
     }
 
