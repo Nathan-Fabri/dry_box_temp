@@ -11,21 +11,24 @@ from datetime import datetime, timezone
 import psycopg2
 from psycopg2.extras import execute_values
 from dotenv import load_dotenv
+import serial
+
+PORT = "COM5"
+BAUD = 115200
+ser = serial.Serial(PORT, BAUD, timeout=1)
+
+line = ser.readline().decode(errors="ignore").strip()
 
 running = True
 
-# Define paths dynamically based on script location
-# Get the directory where this script is located (Python folder)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-# Go up one level to get RPI5 directory
 BASE_DIR = os.path.dirname(SCRIPT_DIR)
-# Go up one more level to get drybox root directory
 DRYBOX_ROOT = os.path.dirname(BASE_DIR)
 
 # Load environment variables from .env file in drybox root
-ENV_PATH = os.path.join(DRYBOX_ROOT, '.env')
-load_dotenv(ENV_PATH)
-LOG_DIR = os.path.join(BASE_DIR, "DataLogging")
+# ENV_PATH = os.path.join(DRYBOX_ROOT, '.env')
+# load_dotenv(ENV_PATH)
+LOG_DIR = os.path.join(BASE_DIR, "DataLogging")  # able to clear files periodically?
 JSON_DIR = os.path.join(BASE_DIR, "JSONS")
 
 # Configuration file paths - Dynamic paths
@@ -42,7 +45,6 @@ logging.basicConfig(
 def log_print(message):
     print(message)
     logging.info(message)
-
 
 def load_config():
     """Load configuration from configLogDB.json with environment variable substitution"""
@@ -77,80 +79,60 @@ def load_config():
         "password": os.getenv("DB_PASSWORD", db_config_raw.get("password")),
     }
 
-    if not all([dbConfig["host"], dbConfig["port"], dbConfig["dbname"], dbConfig["user"]]):
-        log_print("ERROR: Incomplete database configuration. Check your environment variables or config file.")
-        sys.exit(1)
+    # if not all([dbConfig["host"], dbConfig["port"], dbConfig["dbname"], dbConfig["user"]]):
+    #     log_print("ERROR: Incomplete database configuration. Check your environment variables or config file.")
+    #     sys.exit(1)
 
-    if not dbConfig["password"]:
-        log_print("WARNING: No database password found in environment variables or config!")
+    # if not dbConfig["password"]:
+    #     log_print("WARNING: No database password found in environment variables or config!")
 
+# no need
+# def get_last_position(log_path):
+#     """Get the last processed position from a tracking file"""
+#     position_file = log_path + '.position'
+#     if os.path.exists(position_file):
+#         try:
+#             with open(position_file, 'r') as f:
+#                 return int(f.read().strip())
+#         except:
+#             return 0
+#     return 0
 
-def get_last_position(log_path):
-    """Get the last processed position from a tracking file"""
-    position_file = log_path + '.position'
-    if os.path.exists(position_file):
-        try:
-            with open(position_file, 'r') as f:
-                return int(f.read().strip())
-        except:
-            return 0
-    return 0
+# no need
+# def save_last_position(log_path, position):
+#     """Save the last processed position to a tracking file"""
+#     position_file = log_path + '.position'
+#     try:
+#         with open(position_file, 'w') as f:
+#             f.write(str(position))
+#     except Exception as e:
+#         logging.error(f"Error saving position: {e}")
 
-def save_last_position(log_path, position):
-    """Save the last processed position to a tracking file"""
-    position_file = log_path + '.position'
-    try:
-        with open(position_file, 'w') as f:
-            f.write(str(position))
-    except Exception as e:
-        logging.error(f"Error saving position: {e}")
+# PARSE =============
 
-# ...existing parser functions remain the same...
-def parse_infrared_sensor_data(message):
-    """Parse infrared sensor data"""
-    infrared_pattern = r'✅ (Left|Right) Tower Infrared Sensor \| Object Temp: ([\d.]+) °C \| Ambient Temp: ([\d.]+) °C'
-    infrared_match = re.match(infrared_pattern, message)
-    
-    if not infrared_match:
-        return None
-    
-    tower_side = infrared_match.group(1)
-    object_temp = float(infrared_match.group(2))
-    ambient_temp = float(infrared_match.group(3))
-    
-    timestamp = datetime.now(timezone.utc).isoformat()
-    
-    return {
-        'timestamp': timestamp,
-        'sensors': [
-            {'name': f"{tower_side}Tower_Object_Temp", 'value': object_temp},
-            {'name': f"{tower_side}Tower_Ambient_Temp", 'value': ambient_temp}
-        ]
-    }
+# def parse_temp_humidity_sensor_data(message):
+#     pattern = (
+#         r'✅\s*env_chamber\s*\|\s*'
+#         r'temperature:\s*([\d.]+)\s*°C\s*\|\s*'
+#         r'humidity:\s*([\d.]+)\s*%RH'
+#     )
 
-def parse_temp_humidity_sensor_data(message):
-    pattern = (
-        r'✅\s*env_chamber\s*\|\s*'
-        r'temperature:\s*([\d.]+)\s*°C\s*\|\s*'
-        r'humidity:\s*([\d.]+)\s*%RH'
-    )
+#     match = re.search(pattern, message, re.IGNORECASE)
+#     if not match:
+#         return None
 
-    match = re.search(pattern, message, re.IGNORECASE)
-    if not match:
-        return None
+#     temperature = float(match.group(1))
+#     humidity = float(match.group(2))
 
-    temperature = float(match.group(1))
-    humidity = float(match.group(2))
+#     timestamp = datetime.now(timezone.utc).isoformat()
 
-    timestamp = datetime.now(timezone.utc).isoformat()
-
-    return {
-        'timestamp': timestamp,
-        'sensors': [
-            {'name': 'env_chamber_temperature', 'value': temperature},
-            {'name': 'env_chamber_humidity', 'value': humidity}
-        ]
-    }
+#     return {
+#         'timestamp': timestamp,
+#         'sensors': [
+#             {'name': 'env_chamber_temperature', 'value': temperature},
+#             {'name': 'env_chamber_humidity', 'value': humidity}
+#         ]
+#     }
 
 def parse_temp_humidity_sensor_data(message):
     pattern = (
@@ -177,111 +159,22 @@ def parse_temp_humidity_sensor_data(message):
     }
 
 
-def parse_load_cell_sensor_data(message):
-    """Parse load cell sensor data"""
-    load_cell_pattern = r'✅ Load_Cell \| Voltage: ([\d.]+) V \| Weight: ([\d.]+) lb'
-    load_cell_match = re.match(load_cell_pattern, message)
-    
-    if not load_cell_match:
-        return None
-    
-    voltage = float(load_cell_match.group(1))
-    weight = float(load_cell_match.group(2))
-    
-    timestamp = datetime.now(timezone.utc).isoformat()
-    
-    return {
-        'timestamp': timestamp,
-        'sensors': [
-            {'name': 'LoadCell_Voltage', 'value': voltage},
-            {'name': 'LoadCell_Weight', 'value': weight}
-        ]
-    }
-
-def parse_rtd_data(message):
-    """Parse RTD temperature data for multiple channels on one line"""
-    # Regex to find all occurrences of "Channel X: Y.YY C"
-    rtd_pattern = r'Channel ([\d]+): ([\d.-]+) C'
-    matches = re.findall(rtd_pattern, message)
-
-    if not matches:
-        return None
-    
-    timestamp = datetime.now(timezone.utc).isoformat()
-    sensor_list = []
-
-    for channel_num, temp_value in matches:
-        sensor_list.append({
-            'name': f"RTD_CH{channel_num}_Temp", 
-            'value': float(temp_value)
-        })
-
-    return {
-        'timestamp': timestamp,
-        'sensors': sensor_list
-    }
-
-
 def parse_sensor_data_vector(message):
     """Main parser function"""
     if not message.startswith('✅'):
         return None
+    parsed_data = parse_temp_humidity_sensor_data(message)
     
-    for parser in [parse_infrared_sensor_data, parse_rtd_data, parse_temp_humidity_sensor_data, parse_load_cell_sensor_data]:
-                parsed_data = parser(message)
     if parsed_data:
         return parsed_data
-
     return None
-
-# def insert_vector_to_timescaledb(parsed_data, device_name):
-#     """Insert vector data into TimescaleDB"""
-#     if parsed_data is None or "sensors" not in parsed_data:
-#         return
-
-#     timestamp = parsed_data["timestamp"]
-#     records = []
-
-#     for entry in parsed_data['sensors']:
-#         sensor_id = entry["name"]
-#         value = entry["value"]
-#       s.append((timestamp, sensor_id, value))
-
-#     if not records:
-#         return
-
-#     insert_stmt = """
-#         INSERT INTO sensor_data_testing (time, sensor_id, value)
-#         VALUES %s
-#         ON CONFLICT (time, sensor_id) DO NOTHING;
-#     """
-#     # insert_stmt = """
-#     #     INSERT INTO sensor_data (time, sensor_id, value)
-#     #     VALUES (NOW(), %s, %s)
-#     #     ON CONFLICT DO NOTHING;
-#     # """
-
-#     try:
-#         conn = psycopg2.connect(**dbConfig)
-#         cur = conn.cursor()
-#         execute_values(cur, insert_stmt, records)
-#         conn.commit()
-#         cur.close()
-#         conn.close()
-#         logging.info(f"Inserted {len(records)} values from {device_name} to TimescaleDB.")
-#     except Exception as e:
-#         logging.error(f"Failed DB insert from {device_name}: {e}")
-
+# =========================================
 def insert_vector_to_timescaledb(parsed_data, device_name):
     if parsed_data is None or "sensors" not in parsed_data:
         return
 
-    records = []
-    ts = parsed_data["timestamp"]
-
-    for entry in parsed_data['sensors']:
-        records.append((ts, entry["name"], entry["value"]))
-
+    records = [(parsed_data["timestamp"], entry["name"], entry["value"]) for entry in parsed_data['sensors']]
+    
     if not records:
         return
 
@@ -294,12 +187,7 @@ def insert_vector_to_timescaledb(parsed_data, device_name):
     try:
         with psycopg2.connect(**dbConfig) as conn:
             with conn.cursor() as cur:
-                execute_values(
-                    cur,
-                    insert_stmt,
-                    records,
-                    template="(%s, %s, %s)"
-                )
+                execute_values(cur, insert_stmt, records, template="(%s, %s, %s)")
             conn.commit()
 
         logging.info(f"Inserted {len(records)} values from {device_name} to TimescaleDB.")
@@ -308,8 +196,8 @@ def insert_vector_to_timescaledb(parsed_data, device_name):
         logging.error(f"Failed DB insert from {device_name}: {e}")
 
 
-def process_log_line(line):
-    """Process a line from the serial log file"""
+def process_serial_line(line):
+    """Process new serial line"""
     try:
         match = re.search(r'DATA: ([^:]+): (.*)', line)
         if not match:
@@ -327,52 +215,53 @@ def process_log_line(line):
     
     return False
 
-def follow_log_file(log_path):
-    """Follow the log file with position tracking"""
-    lines_read = 0
-    lines_processed = 0
-    last_position = get_last_position(log_path)
+# no need
+# def follow_log_file(log_path):
+#     """Follow the log file with position tracking"""
+#     lines_read = 0
+#     lines_processed = 0
+#     last_position = get_last_position(log_path)
     
-    # Get the sleep interval from config (convert ms to seconds)
-    sleep_interval = config.get("log_interval_ms", 100) / 1000.0  # Default to 100ms
+#     # Get the sleep interval from config (convert ms to seconds)
+#     sleep_interval = config.get("log_interval_ms", 100) / 1000.0  # Default to 100ms
     
-    try:
-        # with open(log_path, 'r') as file:
-        with open(log_path, 'r', encoding='utf-8', errors='ignore') as file:
+#     try:
+#         # with open(log_path, 'r') as file:
+#         with open(log_path, 'r', encoding='utf-8', errors='ignore') as file:
 
-            file.seek(last_position)
-            log_print(f"Starting from position {last_position}")
-            log_print(f"Using {sleep_interval*1000}ms check interval")
+#             file.seek(last_position)
+#             log_print(f"Starting from position {last_position}")
+#             log_print(f"Using {sleep_interval*1000}ms check interval")
             
-            while running:
-                line = file.readline()
-                if not line:
-                    save_last_position(log_path, file.tell())
-                    time.sleep(sleep_interval)  # Use configurable interval
-                    continue
+#             while running:
+#                 line = file.readline()
+#                 if not line:
+#                     save_last_position(log_path, file.tell())
+#                     time.sleep(sleep_interval)  # Use configurable interval
+#                     continue
                 
-                lines_read += 1
+#                 lines_read += 1
                 
-                if "DATA:" in line:
-                    if process_log_line(line.strip()):
-                        lines_processed += 1
+#                 if "DATA:" in line:
+#                     if process_log_line(line.strip()):
+#                         lines_processed += 1
                 
-                # Save position every 10 lines
-                if lines_read % 10 == 0:
-                    save_last_position(log_path, file.tell())
+#                 # Save position every 10 lines
+#                 if lines_read % 10 == 0:
+#                     save_last_position(log_path, file.tell())
                 
-                # Progress every 100 lines
-                if lines_read % 100 == 0:
-                    log_print(f"Processed {lines_read} lines, {lines_processed} sensor readings")
+#                 # Progress every 100 lines
+#                 if lines_read % 100 == 0:
+#                     log_print(f"Processed {lines_read} lines, {lines_processed} sensor readings")
                     
-    except Exception as e:
-        logging.error(f"Error following log file: {e}")
-    finally:
-        # Save final position
-        try:
-            save_last_position(log_path, file.tell())
-        except:
-            pass
+    # except Exception as e:
+    #     logging.error(f"Error following log file: {e}")
+    # finally:
+    #     # Save final position
+    #     try:
+    #         save_last_position(log_path, file.tell())
+    #     except:
+    #         pass
 
 def signal_handler(sig, frame):
     """Handle signals gracefully"""
@@ -380,9 +269,10 @@ def signal_handler(sig, frame):
     # Don't use logging in signal handlers to avoid reentrant calls
     # Just set the flag and let the main loop handle shutdown
     running = False
+    log_print("\nShutdown signal received.")
     
-    if sig == signal.SIGINT:
-        sys.exit(0)
+    # if sig == signal.SIGINT:
+    #     sys.exit(0)
 
 def main():
     """Main function"""
@@ -392,23 +282,30 @@ def main():
     signal.signal(signal.SIGTERM, signal_handler)
     
     log_print("LogDB starting...")
-    log_print(f"Loaded .env from: {ENV_PATH}")
+    # log_print(f"Loaded .env from: {ENV_PATH}")
     load_config()
     
-    sensor_log_path = config.get("sensor_log_path")
-    log_print(f"Monitoring: {sensor_log_path}")
-    
-    if not os.path.exists(sensor_log_path):
-        log_print(f"Error: Log file not found at {sensor_log_path}")
-        return
-    
-    log_print("LogDB running. Press Ctrl+C to exit.")
-    follow_log_file(sensor_log_path)
-    
-    # Log shutdown message after the main loop exits
-    if not running:
-        log_print("Received shutdown signal. Shutting down...")
-    log_print("LogDB shut down.")
+    # sensor_log_path = config.get("sensor_log_path")
+    # log_print(f"Monitoring: {sensor_log_path}")
+    try:
+        with serial.Serial(PORT, BAUD, timeout=1) as ser:
+            ser.reset_input_buffer()
+            
+            while running:
+                if ser.in_waiting >0:
+                    line = ser.readline().decode(errors="ignore").strip()
+                    if line: 
+                        process_serial_line(line)
+                else:
+                    time.sleep(0.01)
+                    
+    except serial.SerialException as e:
+        log_print(f"Serial Error: {e}")
+    except Exception as e:
+        log_print(f"Unexpected Error: {e}")
+    finally:
+        log_print("LogDB shut down.")
+        
 
 if __name__ == "__main__":
     main()
